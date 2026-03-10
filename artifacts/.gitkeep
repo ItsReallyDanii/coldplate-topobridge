@@ -1,0 +1,2 @@
+# Bridge run artifacts. These are gitignored (run outputs are not committed).
+# Only this .gitkeep is tracked.

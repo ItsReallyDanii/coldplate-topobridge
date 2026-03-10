@@ -1,0 +1,38 @@
+{
+  "bridge_schema_id": "bridge_field_frame",
+  "field_dtype": "float64",
+  "field_shape": [
+    20,
+    20
+  ],
+  "has_scalar": true,
+  "input_file": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_smoke\\candidate_01_diamond_2d_s1127\\velocity_field.npz",
+  "input_sha256": "991d627d43fbfdebc054008732662c1077fc5b2e2953cf2888a85f8efcc16bb8",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 4.318143138851515,
+  "magnitude_stats": {
+    "max": 431.81431388515153,
+    "mean": 211.79552314454702,
+    "min": 30.728239805201362,
+    "std": 95.79965374356725
+  },
+  "provenance": {
+    "field_frozen_at": "2026-03-06T13:04:38.168870Z",
+    "grid_dx": 0.1,
+    "grid_dy": 0.1,
+    "grid_nx": 20,
+    "grid_ny": 20,
+    "preprocessing": [
+      "stage4_velocity_field_slice:axis=z,index=10",
+      "solid_detection:method=velocity_magnitude_threshold",
+      "axes_transpose:stage4_nx_ny_nz_to_bridge_ny_nx"
+    ],
+    "schema_version": "1.0.0",
+    "source_artifact": "candidate_01_diamond_2d_s1127/velocity_field.npz",
+    "source_commit": "764d85854961ae982f5690009b4e2a302fe2f6d5",
+    "source_repo": "coldplate-design-engine",
+    "source_stage": "stage4_sim"
+  },
+  "schema_version": "1.0.0",
+  "solid_mask_fraction": 0.495
+}

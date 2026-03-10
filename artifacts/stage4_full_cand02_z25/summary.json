@@ -1,0 +1,41 @@
+{
+  "NOT_PROVEN": [
+    "Any physical interpretation of bridge signatures",
+    "Correspondence between gradient_stats and flow topology",
+    "Equivalence with TopoStream token semantics"
+  ],
+  "active_fraction": 0.5704,
+  "bridge_schema_id": "bridge_summary",
+  "claim_tier": "IMPLEMENTED",
+  "gradient_stats": {
+    "NOTE": "Gradient of theta_bridge over active pixels only. NOT a winding number or vortex charge.",
+    "max_grad_mag": 5.705782346944212,
+    "mean_grad_mag": 0.9427789650936576
+  },
+  "grid_shape": [
+    50,
+    50
+  ],
+  "has_scalar": true,
+  "input_sha256": "77780539b9c2b191b270bbefb767eee6e8241d0bdb644c0b9024831a57c81e2d",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 1.6477479601963863,
+  "magnitude_stats": {
+    "global_max": 164.77479601963861,
+    "mean": 83.53849034216105,
+    "std": 36.344113460356574
+  },
+  "n_active_pixels": 1426,
+  "n_low_signal_pixels": 0,
+  "n_solid_pixels": 1074,
+  "n_total_pixels": 2500,
+  "schema_version": "1.0.0",
+  "solid_fraction": 0.4296,
+  "source_repo": "coldplate-design-engine",
+  "source_stage": "stage4_sim",
+  "theta_stats": {
+    "abs_mean_rad": 1.5850861578599162,
+    "mean_rad": -0.09583399749705178,
+    "std_rad": 1.809426787472046
+  }
+}

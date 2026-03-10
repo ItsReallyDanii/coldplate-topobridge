@@ -1,0 +1,1 @@
+{"schema_version": "1.0.0", "source_repo": "synthetic", "source_stage": "stage0_synthetic", "source_artifact": "swirl.npz", "source_commit": null, "preprocessing": ["synthetic_generated"], "grid_nx": 32, "grid_ny": 32, "grid_dx": null, "grid_dy": null, "field_frozen_at": "2026-03-10T17:00:00Z"}

@@ -1,0 +1,36 @@
+{
+  "bridge_schema_id": "bridge_field_frame",
+  "field_dtype": "float64",
+  "field_shape": [
+    32,
+    32
+  ],
+  "has_scalar": false,
+  "input_file": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-topobridge\\artifacts\\example_swirl_test\\swirl.npz",
+  "input_sha256": "948e989e6af4199f52d2835fc93414a87c131497ceb258818088a92a4f7ceebf",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 0.009999999999955806,
+  "magnitude_stats": {
+    "max": 0.9999999999955805,
+    "mean": 0.999999999990187,
+    "min": 0.99999999995,
+    "std": 5.944578655834079e-12
+  },
+  "provenance": {
+    "field_frozen_at": "2026-03-10T17:00:00Z",
+    "grid_dx": null,
+    "grid_dy": null,
+    "grid_nx": 32,
+    "grid_ny": 32,
+    "preprocessing": [
+      "synthetic_generated"
+    ],
+    "schema_version": "1.0.0",
+    "source_artifact": "swirl.npz",
+    "source_commit": null,
+    "source_repo": "synthetic",
+    "source_stage": "stage0_synthetic"
+  },
+  "schema_version": "1.0.0",
+  "solid_mask_fraction": 0.015625
+}

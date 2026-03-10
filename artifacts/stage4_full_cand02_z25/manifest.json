@@ -1,0 +1,34 @@
+{
+  "bridge_git_sha": "b67e3cc2ef3d0b9996cf720919c737a5a25c8616",
+  "bridge_git_status": "dirty",
+  "bridge_run_sha256": "ce7b4a39bd02cada491fc8548e72001a63894f5a9aa0a8603d5241c694bbfc86",
+  "bridge_schema_id": "bridge_manifest",
+  "files": {
+    "field_contract.json": "c8f49e0fce0837fc87e7d588562c584389256d5f498a47711ca908b19358d874",
+    "signatures.jsonl": "8507a90038cff36a810f044312bd53231210d1342dbceafdb3805b79ff6b477b",
+    "summary.json": "c03c52cd82fd09a5622d7b3aa6f236b9412452b332788b4c1339b772c054b75b"
+  },
+  "input_sha256": "77780539b9c2b191b270bbefb767eee6e8241d0bdb644c0b9024831a57c81e2d",
+  "provenance": {
+    "bridge_git_sha": "b67e3cc2ef3d0b9996cf720919c737a5a25c8616",
+    "bridge_git_status": "dirty",
+    "bridge_repo": "coldplate-topobridge",
+    "grid_nx": 50,
+    "grid_ny": 50,
+    "input_sha256": "77780539b9c2b191b270bbefb767eee6e8241d0bdb644c0b9024831a57c81e2d",
+    "low_signal_threshold": 1.6477479601963863,
+    "preprocessing": [
+      "stage4_velocity_field_slice:axis=z,index=25",
+      "solid_detection:method=velocity_magnitude_threshold",
+      "axes_transpose:stage4_nx_ny_nz_to_bridge_ny_nx"
+    ],
+    "run_timestamp": "2026-03-10T23:39:52.236625+00:00",
+    "schema_version": "1.0.0",
+    "source_artifact": "candidate_02_diamond_2d_s1045/velocity_field.npz",
+    "source_commit": "617eb6ab06191e624373f98dea65542e0e460bb7",
+    "source_repo": "coldplate-design-engine",
+    "source_stage": "stage4_sim"
+  },
+  "run_timestamp": "2026-03-10T23:39:52.236625+00:00",
+  "schema_version": "1.0.0"
+}

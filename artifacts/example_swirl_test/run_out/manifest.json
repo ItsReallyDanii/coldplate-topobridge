@@ -1,0 +1,32 @@
+{
+  "bridge_git_sha": "b67e3cc2ef3d0b9996cf720919c737a5a25c8616",
+  "bridge_git_status": "dirty",
+  "bridge_run_sha256": "112c4f6be251126f5e06a9ddc820e2215f038b460d0ac415087d03b9e10705cf",
+  "bridge_schema_id": "bridge_manifest",
+  "files": {
+    "field_contract.json": "72d124a41f3f7424df44a6311bfa0c44a6bd26e3acdc5085c2420d62b168f867",
+    "signatures.jsonl": "85e902f4155c4adb12b786905f9f5aa31a3bcd9f5261733b2a3542047b377e96",
+    "summary.json": "20a037a8af417448d5e9cd0d3ee1bf4407831cc7d6ff2306ba38c87cf313a8aa"
+  },
+  "input_sha256": "948e989e6af4199f52d2835fc93414a87c131497ceb258818088a92a4f7ceebf",
+  "provenance": {
+    "bridge_git_sha": "b67e3cc2ef3d0b9996cf720919c737a5a25c8616",
+    "bridge_git_status": "dirty",
+    "bridge_repo": "coldplate-topobridge",
+    "grid_nx": 32,
+    "grid_ny": 32,
+    "input_sha256": "948e989e6af4199f52d2835fc93414a87c131497ceb258818088a92a4f7ceebf",
+    "low_signal_threshold": 0.009999999999955806,
+    "preprocessing": [
+      "synthetic_generated"
+    ],
+    "run_timestamp": "2026-03-10T23:08:13.957033+00:00",
+    "schema_version": "1.0.0",
+    "source_artifact": "swirl.npz",
+    "source_commit": null,
+    "source_repo": "synthetic",
+    "source_stage": "stage0_synthetic"
+  },
+  "run_timestamp": "2026-03-10T23:08:13.957033+00:00",
+  "schema_version": "1.0.0"
+}

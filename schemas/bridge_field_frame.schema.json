@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bridge_field_frame.schema.json",
+  "title": "Bridge Field Frame",
+  "description": "Validated provenance and metadata for a frozen 2D field bundle ingested by the coldplate-topobridge. This is a bridge-local schema; it does NOT conform to topology_event_stream.schema.json.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "bridge_schema_id",
+    "input_file",
+    "input_sha256",
+    "provenance",
+    "field_shape",
+    "field_dtype",
+    "has_scalar",
+    "solid_mask_fraction",
+    "low_signal_fraction",
+    "low_signal_threshold",
+    "magnitude_stats"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Bridge field frame schema version"
+    },
+    "bridge_schema_id": {
+      "type": "string",
+      "const": "bridge_field_frame",
+      "description": "Identifies this as a bridge-local schema record"
+    },
+    "input_file": {
+      "type": "string",
+      "description": "Absolute or relative path to the input .npz file"
+    },
+    "input_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 hex digest of the input file bytes"
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "source_repo",
+        "source_stage",
+        "source_artifact",
+        "preprocessing",
+        "grid_nx",
+        "grid_ny",
+        "field_frozen_at"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "schema_version": {
+          "type": "string"
+        },
+        "source_repo": {
+          "type": "string"
+        },
+        "source_stage": {
+          "type": "string"
+        },
+        "source_artifact": {
+          "type": "string"
+        },
+        "source_commit": {
+          "type": ["string", "null"]
+        },
+        "preprocessing": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "grid_nx": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grid_ny": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grid_dx": {
+          "type": ["number", "null"]
+        },
+        "grid_dy": {
+          "type": ["number", "null"]
+        },
+        "field_frozen_at": {
+          "type": "string",
+          "description": "ISO 8601 timestamp"
+        }
+      }
+    },
+    "field_shape": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "[ny, nx]"
+    },
+    "field_dtype": {
+      "type": "string",
+      "description": "NumPy dtype string, e.g. float64"
+    },
+    "has_scalar": {
+      "type": "boolean",
+      "description": "Whether optional scalar field was present in input"
+    },
+    "solid_mask_fraction": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Fraction of pixels marked solid (1 in solid_mask)"
+    },
+    "low_signal_fraction": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Fraction of fluid pixels where vector magnitude < low_signal_threshold"
+    },
+    "low_signal_threshold": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Absolute threshold used to define low-signal pixels"
+    },
+    "magnitude_stats": {
+      "type": "object",
+      "required": ["mean", "std", "min", "max"],
+      "properties": {
+        "mean": { "type": "number" },
+        "std": { "type": "number", "minimum": 0.0 },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      }
+    }
+  }
+}

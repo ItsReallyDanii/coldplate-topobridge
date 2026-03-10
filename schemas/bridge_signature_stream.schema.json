@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bridge_signature_stream.schema.json",
+  "title": "Bridge Signature Stream Record",
+  "description": "One record in the bridge-local signature stream (signatures.jsonl). Each record corresponds to one spatial cell in the 2D field. This is a bridge-local schema; it does NOT use TopoStream token_types or vortex charges.",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "bridge_schema_id",
+    "record_id",
+    "i",
+    "j",
+    "is_solid",
+    "is_low_signal",
+    "theta_bridge",
+    "magnitude"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "bridge_schema_id": {
+      "type": "string",
+      "const": "bridge_signature_stream"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "Deterministic ID: hex(sha256(input_sha256 + ':' + i + ':' + j))[:16]"
+    },
+    "i": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Row index (y-axis)"
+    },
+    "j": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Column index (x-axis)"
+    },
+    "is_solid": {
+      "type": "boolean",
+      "description": "True if solid_mask[i,j] == 1"
+    },
+    "is_low_signal": {
+      "type": "boolean",
+      "description": "True if vector magnitude < low_signal_threshold AND not solid"
+    },
+    "theta_bridge": {
+      "type": ["number", "null"],
+      "description": "atan2(v, u) in radians, in (-pi, pi]. Null if is_solid or is_low_signal."
+    },
+    "magnitude": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "sqrt(u^2 + v^2) — always present even for solid/low-signal pixels"
+    },
+    "scalar": {
+      "type": ["number", "null"],
+      "description": "Optional scalar field value at this pixel. Null if no scalar provided."
+    }
+  }
+}
