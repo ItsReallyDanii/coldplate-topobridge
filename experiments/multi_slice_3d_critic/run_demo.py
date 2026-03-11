@@ -13,6 +13,8 @@ from generate_stack import (
     DEFAULT_NY,
     DEFAULT_N_SLICES,
     EXPERIMENT_LABEL,
+    PerturbationConfig,
+    _normalize_perturbation_config,
     generate_cases,
 )
 
@@ -23,16 +25,19 @@ def run_demo(
     ny: int = DEFAULT_NY,
     n_slices: int = DEFAULT_N_SLICES,
     low_signal_threshold: float = DEFAULT_LOW_SIGNAL_THRESHOLD,
+    perturbation_config: PerturbationConfig | Dict[str, object] | None = None,
 ) -> Dict[str, object]:
     """Generate stacks, extract descriptors, and assemble a bounded critic summary."""
     output_root = Path(output_root).resolve()
     output_root.mkdir(parents=True, exist_ok=True)
+    perturbation = _normalize_perturbation_config(perturbation_config)
 
     generated = generate_cases(
         output_root=output_root,
         nx=nx,
         ny=ny,
         n_slices=n_slices,
+        perturbation_config=perturbation,
     )
     results_root = output_root / "results"
     results_root.mkdir(exist_ok=True)
@@ -48,7 +53,16 @@ def run_demo(
             )
         )
 
-    critic_summary = _build_critic_summary(case_results=case_results)
+    critic_summary = _build_critic_summary(
+        case_results=case_results,
+        experimental_controls={
+            "grid_nx": nx,
+            "grid_ny": ny,
+            "n_slices": n_slices,
+            "low_signal_threshold_fraction": low_signal_threshold,
+            "perturbation": perturbation.to_dict(),
+        },
+    )
     with open(output_root / "critic_comparison.json", "w", encoding="utf-8", newline="\n") as handle:
         json.dump(critic_summary, handle, indent=2, sort_keys=True)
         handle.write("\n")
@@ -56,7 +70,10 @@ def run_demo(
     return critic_summary
 
 
-def _build_critic_summary(case_results: List[Dict[str, object]]) -> Dict[str, object]:
+def _build_critic_summary(
+    case_results: List[Dict[str, object]],
+    experimental_controls: Dict[str, object],
+) -> Dict[str, object]:
     ranked = sorted(
         case_results,
         key=lambda item: item["case_summary"]["stack_descriptor_stats"]["stack_complexity_index"],
@@ -97,6 +114,7 @@ def _build_critic_summary(case_results: List[Dict[str, object]]) -> Dict[str, ob
             "This is a bounded comparison across deterministic slice stacks. "
             "It is a simple 3D proxy only, not a real-candidate ranking method."
         ),
+        "experimental_controls": experimental_controls,
         "what_this_is": (
             "A stack of 2D slices with controlled variation, encoded slice-by-slice "
             "with the existing bridge-local path and aggregated with sandbox-only metrics."

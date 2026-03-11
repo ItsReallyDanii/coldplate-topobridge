@@ -1,0 +1,65 @@
+{
+  "NOT_PROVEN": [
+    "Any physical interpretation of bridge signatures",
+    "Correspondence between gradient_stats and flow topology",
+    "Equivalence with TopoStream token semantics"
+  ],
+  "active_fraction": 0.7291666666666666,
+  "bridge_schema_id": "bridge_summary",
+  "claim_tier": "IMPLEMENTED",
+  "encoder_controls": {
+    "low_signal_threshold_absolute": 0.011161955760199927,
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.0,
+      "mode": "none",
+      "note": "No perturbation applied.",
+      "phase_seed": 0
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "geometry_case": "stacked_offset_obstruction_channel",
+  "gradient_stats": {
+    "NOTE": "Gradient of theta_bridge over active pixels only. NOT a winding number or vortex charge.",
+    "max_grad_mag": 0.17186929750910193,
+    "mean_grad_mag": 0.049879976305931786
+  },
+  "grid_shape": [
+    8,
+    12
+  ],
+  "has_scalar": false,
+  "input_sha256": "833e1d88ad850e23bb27ef0e25a8604cfa14d32e2914b68b8824adf19b8fad33",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 0.011161955760199927,
+  "magnitude_stats": {
+    "global_max": 1.1161955760199926,
+    "mean": 0.5743661422783488,
+    "std": 0.34484197509120607
+  },
+  "n_active_pixels": 70,
+  "n_low_signal_pixels": 0,
+  "n_solid_pixels": 26,
+  "n_total_pixels": 96,
+  "provenance_class": "SYNTHETIC",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "scope_guardrail": "Bridge-style slice summary only. This does NOT validate TopoStream semantics, fluid vortices, physical realism, or 3D TPMS ranking.",
+  "slice_id": "obstruction_stack__z02",
+  "slice_index": 2,
+  "solid_fraction": 0.2708333333333333,
+  "source_repo": "coldplate-topobridge",
+  "source_stage": "experimental_multi_slice_3d_critic",
+  "theta_stats": {
+    "abs_mean_rad": 0.0445335830624534,
+    "mean_rad": -1.883414059631962e-18,
+    "std_rad": 0.08336300598817882
+  },
+  "transverse_max_ratio": null,
+  "z_position": 1.0
+}

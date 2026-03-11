@@ -37,6 +37,29 @@ _ZIP_TIMESTAMP = (2026, 3, 11, 0, 0, 0)
 
 
 @dataclass(frozen=True)
+class PerturbationConfig:
+    mode: str = "none"
+    amplitude_fraction: float = 0.0
+    phase_seed: int = 0
+
+    def to_dict(self) -> Dict[str, object]:
+        note = (
+            "No perturbation applied."
+            if self.mode == "none" or self.amplitude_fraction == 0.0
+            else (
+                "Deterministic bounded sinusoidal dither applied to fluid cells only. "
+                "This is a robustness stressor, not a physical noise model."
+            )
+        )
+        return {
+            "mode": self.mode,
+            "amplitude_fraction": self.amplitude_fraction,
+            "phase_seed": self.phase_seed,
+            "note": note,
+        }
+
+
+@dataclass(frozen=True)
 class SliceArtifact:
     case_id: str
     slice_id: str
@@ -64,17 +87,34 @@ def generate_cases(
     nx: int = DEFAULT_NX,
     ny: int = DEFAULT_NY,
     n_slices: int = DEFAULT_N_SLICES,
+    perturbation_config: PerturbationConfig | Dict[str, object] | None = None,
 ) -> List[StackArtifact]:
     """Write all multi-slice sandbox cases to ``output_root / fields``."""
     output_root = Path(output_root)
     fields_dir = output_root / "fields"
     fields_dir.mkdir(parents=True, exist_ok=True)
 
+    perturbation = _normalize_perturbation_config(perturbation_config)
     z_positions = _make_z_positions(n_slices)
     case_defs = [
-        _build_straight_stack_case(nx=nx, ny=ny, z_positions=z_positions),
-        _build_obstruction_stack_case(nx=nx, ny=ny, z_positions=z_positions),
-        _build_constriction_stack_case(nx=nx, ny=ny, z_positions=z_positions),
+        _build_straight_stack_case(
+            nx=nx,
+            ny=ny,
+            z_positions=z_positions,
+            perturbation=perturbation,
+        ),
+        _build_obstruction_stack_case(
+            nx=nx,
+            ny=ny,
+            z_positions=z_positions,
+            perturbation=perturbation,
+        ),
+        _build_constriction_stack_case(
+            nx=nx,
+            ny=ny,
+            z_positions=z_positions,
+            perturbation=perturbation,
+        ),
     ]
 
     git_sha = _get_repo_git_sha(output_root)
@@ -127,6 +167,7 @@ def generate_cases(
                 git_sha=git_sha,
                 nx=nx,
                 ny=ny,
+                perturbation=perturbation,
             ),
         )
 
@@ -149,10 +190,11 @@ def _build_straight_stack_case(
     nx: int,
     ny: int,
     z_positions: np.ndarray,
+    perturbation: PerturbationConfig,
 ) -> Dict[str, object]:
     x, _, _, y2d = _make_cell_centered_grid(nx=nx, ny=ny)
     height = np.full(nx, STRAIGHT_CHANNEL_HEIGHT, dtype=np.float64)
-    u, v, solid_mask = _variable_height_channel_streamfunction(
+    base_u, base_v, base_solid_mask = _variable_height_channel_streamfunction(
         x=x,
         y2d=y2d,
         height=height,
@@ -161,6 +203,14 @@ def _build_straight_stack_case(
     slices = []
     for slice_index, z_position in enumerate(z_positions):
         slice_id = f"straight_stack__z{slice_index:02d}"
+        u, v = _apply_bounded_perturbation(
+            u=base_u,
+            v=base_v,
+            solid_mask=base_solid_mask,
+            case_ordinal=0,
+            slice_index=slice_index,
+            perturbation=perturbation,
+        )
 
         def build_meta(
             npz_path: Path,
@@ -183,6 +233,7 @@ def _build_straight_stack_case(
                 ),
                 nx=nx,
                 ny=ny,
+                n_slices=len(z_positions),
                 git_sha=git_sha,
                 source_artifact=f"fields/straight_stack/{npz_path.name}",
                 slice_id=slice_id,
@@ -195,6 +246,7 @@ def _build_straight_stack_case(
                 geometry_parameters={
                     "channel_height": STRAIGHT_CHANNEL_HEIGHT,
                 },
+                perturbation=perturbation,
             )
 
         slices.append(
@@ -202,9 +254,9 @@ def _build_straight_stack_case(
                 "slice_id": slice_id,
                 "slice_index": slice_index,
                 "z_position": float(z_position),
-                "u": u.copy(),
-                "v": v.copy(),
-                "solid_mask": solid_mask.copy(),
+                "u": u,
+                "v": v,
+                "solid_mask": base_solid_mask.copy(),
                 "meta": build_meta,
             }
         )
@@ -230,6 +282,7 @@ def _build_obstruction_stack_case(
     nx: int,
     ny: int,
     z_positions: np.ndarray,
+    perturbation: PerturbationConfig,
 ) -> Dict[str, object]:
     slices = []
     for slice_index, z_position in enumerate(z_positions):
@@ -247,6 +300,14 @@ def _build_obstruction_stack_case(
             obstacle_radius=obstacle_radius,
             wake_strength=wake_strength,
             gap_boost=gap_boost,
+        )
+        u, v = _apply_bounded_perturbation(
+            u=u,
+            v=v,
+            solid_mask=solid_mask,
+            case_ordinal=1,
+            slice_index=slice_index,
+            perturbation=perturbation,
         )
         slice_id = f"obstruction_stack__z{slice_index:02d}"
 
@@ -277,6 +338,7 @@ def _build_obstruction_stack_case(
                 ),
                 nx=nx,
                 ny=ny,
+                n_slices=len(z_positions),
                 git_sha=git_sha,
                 source_artifact=f"fields/obstruction_stack/{npz_path.name}",
                 slice_id=slice_id,
@@ -294,6 +356,7 @@ def _build_obstruction_stack_case(
                     "wake_strength": wake_strength,
                     "gap_boost_strength": gap_boost,
                 },
+                perturbation=perturbation,
             )
 
         slices.append(
@@ -329,6 +392,7 @@ def _build_constriction_stack_case(
     nx: int,
     ny: int,
     z_positions: np.ndarray,
+    perturbation: PerturbationConfig,
 ) -> Dict[str, object]:
     x, _, _, y2d = _make_cell_centered_grid(nx=nx, ny=ny)
     slices = []
@@ -343,6 +407,14 @@ def _build_constriction_stack_case(
             x=x,
             y2d=y2d,
             height=height,
+        )
+        u, v = _apply_bounded_perturbation(
+            u=u,
+            v=v,
+            solid_mask=solid_mask,
+            case_ordinal=2,
+            slice_index=slice_index,
+            perturbation=perturbation,
         )
         slice_id = f"constriction_stack__z{slice_index:02d}"
 
@@ -371,6 +443,7 @@ def _build_constriction_stack_case(
                 ),
                 nx=nx,
                 ny=ny,
+                n_slices=len(z_positions),
                 git_sha=git_sha,
                 source_artifact=f"fields/constriction_stack/{npz_path.name}",
                 slice_id=slice_id,
@@ -387,6 +460,7 @@ def _build_constriction_stack_case(
                     "throat_sigma": throat_sigma,
                     "throat_center_x": throat_center,
                 },
+                perturbation=perturbation,
             )
 
         slices.append(
@@ -518,6 +592,80 @@ def _make_z_positions(n_slices: int) -> np.ndarray:
     return np.linspace(DOMAIN_Z_MIN, DOMAIN_Z_MAX, n_slices, dtype=np.float64)
 
 
+def _normalize_perturbation_config(
+    perturbation_config: PerturbationConfig | Dict[str, object] | None,
+) -> PerturbationConfig:
+    if perturbation_config is None:
+        return PerturbationConfig()
+    if isinstance(perturbation_config, PerturbationConfig):
+        config = perturbation_config
+    else:
+        config = PerturbationConfig(
+            mode=str(perturbation_config.get("mode", "none")),
+            amplitude_fraction=float(perturbation_config.get("amplitude_fraction", 0.0)),
+            phase_seed=int(perturbation_config.get("phase_seed", 0)),
+        )
+
+    if config.mode not in {"none", "sinusoidal_dither"}:
+        raise ValueError(f"Unsupported perturbation mode: {config.mode}")
+    if not 0.0 <= config.amplitude_fraction <= 0.05:
+        raise ValueError("perturbation amplitude_fraction must be between 0.0 and 0.05")
+    if config.mode == "none" and config.amplitude_fraction != 0.0:
+        raise ValueError("perturbation mode 'none' requires amplitude_fraction=0.0")
+    return config
+
+
+def _apply_bounded_perturbation(
+    u: np.ndarray,
+    v: np.ndarray,
+    solid_mask: np.ndarray,
+    case_ordinal: int,
+    slice_index: int,
+    perturbation: PerturbationConfig,
+) -> tuple[np.ndarray, np.ndarray]:
+    if perturbation.mode == "none" or perturbation.amplitude_fraction == 0.0:
+        return u.copy(), v.copy()
+
+    ny, nx = u.shape
+    _, _, x2d, y2d = _make_cell_centered_grid(nx=nx, ny=ny)
+    fluid_mask = ~solid_mask.astype(bool)
+    if not fluid_mask.any():
+        return u.copy(), v.copy()
+
+    base_mag = np.sqrt(u**2 + v**2)
+    speed_scale = float(base_mag[fluid_mask].max()) if fluid_mask.any() else 0.0
+    if speed_scale == 0.0:
+        return u.copy(), v.copy()
+
+    phase = (
+        0.31 * float(case_ordinal + 1)
+        + 0.17 * float(slice_index + 1)
+        + 0.11 * float(perturbation.phase_seed)
+    )
+    pattern_u = np.sin(2.0 * np.pi * (1.55 * x2d + 0.75 * y2d + phase))
+    pattern_u *= np.cos(2.0 * np.pi * (0.55 * x2d - 1.10 * y2d - phase))
+    pattern_v = np.cos(2.0 * np.pi * (1.20 * x2d - 0.65 * y2d + 0.50 * phase))
+    pattern_v *= np.sin(2.0 * np.pi * (0.85 * x2d + 1.05 * y2d + phase))
+
+    normalized_mag = np.zeros_like(base_mag, dtype=np.float64)
+    normalized_mag[fluid_mask] = base_mag[fluid_mask] / speed_scale
+    weight = np.clip(0.20 + 0.80 * normalized_mag, 0.0, 1.0)
+    amplitude = perturbation.amplitude_fraction * speed_scale
+
+    u_out = u.copy()
+    v_out = v.copy()
+    u_out[fluid_mask] += amplitude * 0.45 * pattern_u[fluid_mask] * weight[fluid_mask]
+    v_out[fluid_mask] += amplitude * 0.70 * pattern_v[fluid_mask] * weight[fluid_mask]
+
+    u_cap = speed_scale * (1.0 + perturbation.amplitude_fraction)
+    v_cap = max(float(np.max(np.abs(v[fluid_mask]))), 0.35 * speed_scale) + amplitude
+    u_out[fluid_mask] = np.clip(u_out[fluid_mask], 0.0, u_cap)
+    v_out[fluid_mask] = np.clip(v_out[fluid_mask], -v_cap, v_cap)
+    u_out[~fluid_mask] = 0.0
+    v_out[~fluid_mask] = 0.0
+    return u_out.astype(np.float64), v_out.astype(np.float64)
+
+
 def _base_meta(
     case_id: str,
     geometry_case: str,
@@ -526,6 +674,7 @@ def _base_meta(
     physics_note: str,
     nx: int,
     ny: int,
+    n_slices: int,
     git_sha: str | None,
     source_artifact: str,
     slice_id: str,
@@ -533,7 +682,9 @@ def _base_meta(
     z_position: float,
     slice_generation_rule: str,
     geometry_parameters: Dict[str, object] | None = None,
+    perturbation: PerturbationConfig | None = None,
 ) -> Dict[str, object]:
+    perturbation_payload = _normalize_perturbation_config(perturbation).to_dict()
     return {
         "schema_version": "1.0.0",
         "source_repo": "coldplate-topobridge",
@@ -566,6 +717,12 @@ def _base_meta(
                 "z_max": DOMAIN_Z_MAX,
             },
             "geometry_parameters": geometry_parameters or {},
+            "experimental_controls": {
+                "grid_nx": nx,
+                "grid_ny": ny,
+                "n_slices": n_slices,
+                "perturbation": perturbation_payload,
+            },
             "simple_3d_proxy": {
                 "representation": "stacked_2d_slices",
                 "slice_id": slice_id,
@@ -591,6 +748,7 @@ def _build_case_manifest(
     git_sha: str | None,
     nx: int,
     ny: int,
+    perturbation: PerturbationConfig | None,
 ) -> Dict[str, object]:
     return {
         "schema_version": "1.0.0",
@@ -609,6 +767,12 @@ def _build_case_manifest(
         "grid_nx": nx,
         "grid_ny": ny,
         "n_slices": len(slice_artifacts),
+        "experimental_controls": {
+            "grid_nx": nx,
+            "grid_ny": ny,
+            "n_slices": len(slice_artifacts),
+            "perturbation": _normalize_perturbation_config(perturbation).to_dict(),
+        },
         "slice_artifacts": [
             {
                 "slice_id": item.slice_id,

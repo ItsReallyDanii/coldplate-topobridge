@@ -1,0 +1,65 @@
+{
+  "NOT_PROVEN": [
+    "Any physical interpretation of bridge signatures",
+    "Correspondence between gradient_stats and flow topology",
+    "Equivalence with TopoStream token semantics"
+  ],
+  "active_fraction": 0.75,
+  "bridge_schema_id": "bridge_summary",
+  "claim_tier": "IMPLEMENTED",
+  "encoder_controls": {
+    "low_signal_threshold_absolute": 0.009696995364553207,
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.012,
+      "mode": "sinusoidal_dither",
+      "note": "Deterministic bounded sinusoidal dither applied to fluid cells only. This is a robustness stressor, not a physical noise model.",
+      "phase_seed": 7
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "geometry_case": "stacked_straight_channel",
+  "gradient_stats": {
+    "NOTE": "Gradient of theta_bridge over active pixels only. NOT a winding number or vortex charge.",
+    "max_grad_mag": 0.010812686165669497,
+    "mean_grad_mag": 0.005118856612201475
+  },
+  "grid_shape": [
+    8,
+    12
+  ],
+  "has_scalar": false,
+  "input_sha256": "911b2fe47483dbe338634892a5ad17fb57f7ba888c575c5f676bee6a302d1dcf",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 0.009696995364553207,
+  "magnitude_stats": {
+    "global_max": 0.9696995364553207,
+    "mean": 0.5898757425706137,
+    "std": 0.3507987679768805
+  },
+  "n_active_pixels": 72,
+  "n_low_signal_pixels": 0,
+  "n_solid_pixels": 24,
+  "n_total_pixels": 96,
+  "provenance_class": "EXACT_ANALYTIC",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "scope_guardrail": "Bridge-style slice summary only. This does NOT validate TopoStream semantics, fluid vortices, physical realism, or 3D TPMS ranking.",
+  "slice_id": "straight_stack__z01",
+  "slice_index": 1,
+  "solid_fraction": 0.25,
+  "source_repo": "coldplate-topobridge",
+  "source_stage": "experimental_multi_slice_3d_critic",
+  "theta_stats": {
+    "abs_mean_rad": 0.005333906017991001,
+    "mean_rad": 0.0005065862854107232,
+    "std_rad": 0.00705960710933261
+  },
+  "transverse_max_ratio": null,
+  "z_position": 0.5
+}

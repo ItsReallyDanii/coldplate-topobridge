@@ -1,0 +1,150 @@
+{
+  "case_id": "constriction_stack",
+  "critic_interpretation": {
+    "local_only": true,
+    "note": "The stack_complexity_index is an internal sandbox ordering aid for these bounded cases only. It is not a validated 3D ranking or physics score."
+  },
+  "descriptor_schema_id": "experimental_multi_slice_3d_case_summary",
+  "descriptor_tokens": [
+    "EXPERIMENTAL_SANDBOX",
+    "SIMPLE_3D_PROXY_STACK",
+    "PROVENANCE_QUASI_ANALYTICAL",
+    "STACK_COMPLEXITY_HIGH",
+    "SLICE_VARIATION_BROAD",
+    "STACK_DEFLECTION_HIGH"
+  ],
+  "encoder_controls": {
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 5,
+    "perturbation": {
+      "amplitude_fraction": 0.0,
+      "mode": "none",
+      "note": "No perturbation applied.",
+      "phase_seed": 0
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "geometry_case": "stacked_breathing_constriction_channel",
+  "provenance_class": "QUASI_ANALYTICAL",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "simple_3d_proxy_note": "This case is represented as a deterministic stack of 2D slices with controlled variation. It is a bounded proxy, not a validated 3D solver.",
+  "slice_count": 5,
+  "slice_overview": [
+    {
+      "acceleration_ratio": 1.7815840097236704,
+      "bounded_complexity_index": 0.46982339505125736,
+      "deflection_fraction": 0.22580645161290322,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_BREATHING_CONSTRICTION_CHANNEL",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "AXIAL_VARIATION_MEDIUM",
+        "DEFLECTION_LOCALIZED_STRONG",
+        "ACCELERATION_BAND_HIGH",
+        "SOLID_IMPRINT_MEDIUM",
+        "CRITIC_COMPLEXITY_HIGH"
+      ],
+      "slice_id": "constriction_stack__z00",
+      "slice_index": 0,
+      "theta_std_rad": 0.12316860817052398,
+      "z_position": 0.0
+    },
+    {
+      "acceleration_ratio": 1.9403476623017357,
+      "bounded_complexity_index": 0.6492421952781181,
+      "deflection_fraction": 0.3870967741935484,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_BREATHING_CONSTRICTION_CHANNEL",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "AXIAL_VARIATION_MEDIUM",
+        "DEFLECTION_LOCALIZED_STRONG",
+        "ACCELERATION_BAND_HIGH",
+        "SOLID_IMPRINT_MEDIUM",
+        "CRITIC_COMPLEXITY_HIGH"
+      ],
+      "slice_id": "constriction_stack__z01",
+      "slice_index": 1,
+      "theta_std_rad": 0.17977155135295828,
+      "z_position": 0.25
+    },
+    {
+      "acceleration_ratio": 2.0310833983152414,
+      "bounded_complexity_index": 0.6846447975074883,
+      "deflection_fraction": 0.3870967741935484,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_BREATHING_CONSTRICTION_CHANNEL",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "AXIAL_VARIATION_HIGH",
+        "DEFLECTION_LOCALIZED_STRONG",
+        "ACCELERATION_BAND_HIGH",
+        "SOLID_IMPRINT_MEDIUM",
+        "CRITIC_COMPLEXITY_HIGH"
+      ],
+      "slice_id": "constriction_stack__z02",
+      "slice_index": 2,
+      "theta_std_rad": 0.201173368958052,
+      "z_position": 0.5
+    },
+    {
+      "acceleration_ratio": 2.0066144494683185,
+      "bounded_complexity_index": 0.6501485288713845,
+      "deflection_fraction": 0.34375,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_BREATHING_CONSTRICTION_CHANNEL",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "AXIAL_VARIATION_MEDIUM",
+        "DEFLECTION_LOCALIZED_STRONG",
+        "ACCELERATION_BAND_HIGH",
+        "SOLID_IMPRINT_LOW",
+        "CRITIC_COMPLEXITY_HIGH"
+      ],
+      "slice_id": "constriction_stack__z03",
+      "slice_index": 3,
+      "theta_std_rad": 0.18845178874560223,
+      "z_position": 0.75
+    },
+    {
+      "acceleration_ratio": 1.794058710505614,
+      "bounded_complexity_index": 0.4820122899171678,
+      "deflection_fraction": 0.25,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_BREATHING_CONSTRICTION_CHANNEL",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "AXIAL_VARIATION_MEDIUM",
+        "DEFLECTION_LOCALIZED_STRONG",
+        "ACCELERATION_BAND_HIGH",
+        "SOLID_IMPRINT_LOW",
+        "CRITIC_COMPLEXITY_HIGH"
+      ],
+      "slice_id": "constriction_stack__z04",
+      "slice_index": 4,
+      "theta_std_rad": 0.12517768507090724,
+      "z_position": 1.0
+    }
+  ],
+  "stack_descriptor_stats": {
+    "slice_acceleration_mean": 1.9107376460629162,
+    "slice_active_fraction_mean": 0.6541666666666666,
+    "slice_complexity_mean": 0.5871742413250832,
+    "slice_complexity_span": 0.21482140245623094,
+    "slice_complexity_std": 0.09181389684300688,
+    "slice_deflection_mean": 0.31875,
+    "slice_stability_fraction": 0.6,
+    "slice_theta_std_mean": 0.16354860045960873,
+    "stack_complexity_index": 0.6438958848096047
+  }
+}

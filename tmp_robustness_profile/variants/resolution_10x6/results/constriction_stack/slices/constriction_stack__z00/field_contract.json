@@ -1,0 +1,86 @@
+{
+  "bridge_schema_id": "bridge_field_frame",
+  "field_dtype": "float64",
+  "field_shape": [
+    6,
+    10
+  ],
+  "has_scalar": false,
+  "input_file": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-topobridge\\tmp_robustness_profile\\variants\\resolution_10x6\\fields\\constriction_stack\\constriction_stack__z00.npz",
+  "input_sha256": "9075aa2e436dd688cd374e67cccb3ccdad1e7f024e261df7606c0f44d65acf9a",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 0.01193771020119471,
+  "magnitude_stats": {
+    "max": 1.193771020119471,
+    "mean": 0.7093761934588754,
+    "min": 0.12559268808485016,
+    "std": 0.33813002754616883
+  },
+  "provenance": {
+    "experimental_case": {
+      "case_id": "constriction_stack",
+      "description": "Smooth constriction stack from a streamfunction with throat depth, width, and center varying deterministically across slices.",
+      "domain_bounds": {
+        "x_max": 1.0,
+        "x_min": 0.0,
+        "y_max": 0.6,
+        "y_min": -0.6,
+        "z_max": 1.0,
+        "z_min": 0.0
+      },
+      "experiment_id": "multi_slice_3d_critic_v1",
+      "experiment_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+      "experimental_controls": {
+        "grid_nx": 10,
+        "grid_ny": 6,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "geometry_case": "stacked_breathing_constriction_channel",
+      "geometry_parameters": {
+        "base_height": 0.8,
+        "throat_center_x": 0.43,
+        "throat_depth_fraction": 0.26,
+        "throat_sigma": 0.125
+      },
+      "physics_note": "QUASI_ANALYTICAL: exact for the constructed streamfunction in each slice, but not claimed as a validated Navier-Stokes or coldplate-physics solution.",
+      "provenance_class": "QUASI_ANALYTICAL",
+      "scope_guardrails": [
+        "EXPERIMENTAL_SANDBOX only",
+        "No physical realism claim",
+        "No vortex correspondence claim",
+        "No TopoStream semantic compatibility claim",
+        "No validated ranking of 3D TPMS coldplate candidates",
+        "No physics validation claim"
+      ],
+      "simple_3d_proxy": {
+        "representation": "stacked_2d_slices",
+        "slice_generation_rule": "Constriction depth, sigma, and center vary smoothly with z while the per-slice field remains continuity-consistent for the constructed streamfunction.",
+        "slice_id": "constriction_stack__z00",
+        "slice_index": 0,
+        "z_position": 0.0
+      }
+    },
+    "field_frozen_at": "2026-03-11T00:00:00Z",
+    "grid_dx": 0.1,
+    "grid_dy": 0.19999999999999998,
+    "grid_nx": 10,
+    "grid_ny": 6,
+    "preprocessing": [
+      "EXPERIMENTAL_SANDBOX",
+      "multi_slice_3d_critic_case_generation"
+    ],
+    "schema_version": "1.0.0",
+    "source_artifact": "fields/constriction_stack/constriction_stack__z00.npz",
+    "source_commit": "dcdd37b369d61e79d2c0a5b5ce8796b219c7e3fe",
+    "source_repo": "coldplate-topobridge",
+    "source_stage": "experimental_multi_slice_3d_critic"
+  },
+  "schema_version": "1.0.0",
+  "solid_mask_fraction": 0.36666666666666664
+}

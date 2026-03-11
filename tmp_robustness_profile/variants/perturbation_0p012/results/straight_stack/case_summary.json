@@ -1,0 +1,110 @@
+{
+  "case_id": "straight_stack",
+  "critic_interpretation": {
+    "local_only": true,
+    "note": "The stack_complexity_index is an internal sandbox ordering aid for these bounded cases only. It is not a validated 3D ranking or physics score."
+  },
+  "descriptor_schema_id": "experimental_multi_slice_3d_case_summary",
+  "descriptor_tokens": [
+    "EXPERIMENTAL_SANDBOX",
+    "SIMPLE_3D_PROXY_STACK",
+    "PROVENANCE_EXACT_ANALYTIC",
+    "STACK_COMPLEXITY_LOW",
+    "SLICE_VARIATION_TIGHT",
+    "STACK_DEFLECTION_LOW"
+  ],
+  "encoder_controls": {
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.012,
+      "mode": "sinusoidal_dither",
+      "note": "Deterministic bounded sinusoidal dither applied to fluid cells only. This is a robustness stressor, not a physical noise model.",
+      "phase_seed": 7
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "geometry_case": "stacked_straight_channel",
+  "provenance_class": "EXACT_ANALYTIC",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "simple_3d_proxy_note": "This case is represented as a deterministic stack of 2D slices with controlled variation. It is a bounded proxy, not a validated 3D solver.",
+  "slice_count": 3,
+  "slice_overview": [
+    {
+      "acceleration_ratio": 1.640533446210364,
+      "bounded_complexity_index": 0.05406744149357115,
+      "deflection_fraction": 0.0,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_STRAIGHT_CHANNEL",
+        "PROVENANCE_EXACT_ANALYTIC",
+        "AXIAL_VARIATION_LOW",
+        "DEFLECTION_LOCALIZED_NONE",
+        "ACCELERATION_BAND_MEDIUM",
+        "SOLID_IMPRINT_LOW",
+        "CRITIC_COMPLEXITY_LOW"
+      ],
+      "slice_id": "straight_stack__z00",
+      "slice_index": 0,
+      "theta_std_rad": 0.007068714722453062,
+      "z_position": 0.0
+    },
+    {
+      "acceleration_ratio": 1.6404534119556926,
+      "bounded_complexity_index": 0.054083037510764015,
+      "deflection_fraction": 0.0,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_STRAIGHT_CHANNEL",
+        "PROVENANCE_EXACT_ANALYTIC",
+        "AXIAL_VARIATION_LOW",
+        "DEFLECTION_LOCALIZED_NONE",
+        "ACCELERATION_BAND_MEDIUM",
+        "SOLID_IMPRINT_LOW",
+        "CRITIC_COMPLEXITY_LOW"
+      ],
+      "slice_id": "straight_stack__z01",
+      "slice_index": 1,
+      "theta_std_rad": 0.00705960710933261,
+      "z_position": 0.5
+    },
+    {
+      "acceleration_ratio": 1.6407481101969046,
+      "bounded_complexity_index": 0.053612891012691136,
+      "deflection_fraction": 0.0,
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_SLICE",
+        "GEOMETRY_STACKED_STRAIGHT_CHANNEL",
+        "PROVENANCE_EXACT_ANALYTIC",
+        "AXIAL_VARIATION_LOW",
+        "DEFLECTION_LOCALIZED_NONE",
+        "ACCELERATION_BAND_MEDIUM",
+        "SOLID_IMPRINT_LOW",
+        "CRITIC_COMPLEXITY_LOW"
+      ],
+      "slice_id": "straight_stack__z02",
+      "slice_index": 2,
+      "theta_std_rad": 0.006657049017361949,
+      "z_position": 1.0
+    }
+  ],
+  "stack_descriptor_stats": {
+    "slice_acceleration_mean": 1.6405783227876538,
+    "slice_active_fraction_mean": 0.75,
+    "slice_complexity_mean": 0.05392112333900876,
+    "slice_complexity_span": 0.0004701464980728792,
+    "slice_complexity_std": 0.00021804614829351156,
+    "slice_deflection_mean": 0.0,
+    "slice_stability_fraction": 1.0,
+    "slice_theta_std_mean": 0.006928456949715872,
+    "stack_complexity_index": 0.0485694895480467
+  }
+}

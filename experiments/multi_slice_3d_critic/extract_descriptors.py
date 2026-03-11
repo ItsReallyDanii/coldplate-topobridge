@@ -51,6 +51,7 @@ def extract_case(
     case_summary = _build_case_summary(
         stack_artifact=stack_artifact,
         slice_results=slice_results,
+        low_signal_threshold=low_signal_threshold,
     )
     _write_json(output_dir / "case_summary.json", case_summary)
 
@@ -104,6 +105,11 @@ def extract_slice(
             "slice_id": slice_meta["slice_id"],
             "slice_index": slice_meta["slice_index"],
             "z_position": slice_meta["z_position"],
+            "experimental_controls": case_meta.get("experimental_controls", {}),
+            "encoder_controls": {
+                "low_signal_threshold_fraction": float(low_signal_threshold),
+                "low_signal_threshold_absolute": float(encoder_output.low_signal_threshold),
+            },
             "scope_guardrail": (
                 "Bridge-style slice summary only. This does NOT validate TopoStream "
                 "semantics, fluid vortices, physical realism, or 3D TPMS ranking."
@@ -115,6 +121,7 @@ def extract_slice(
         bundle=bundle,
         encoder_output=encoder_output,
         case_meta=case_meta,
+        low_signal_threshold=low_signal_threshold,
     )
 
     _write_json(output_dir / "field_contract.json", field_contract)
@@ -180,6 +187,7 @@ def _build_slice_descriptor_summary(
     bundle,
     encoder_output,
     case_meta: Dict[str, object],
+    low_signal_threshold: float,
 ) -> Dict[str, object]:
     active_mask = (~bundle.solid_mask.astype(bool)) & (~encoder_output.low_signal_mask)
     magnitude = encoder_output.magnitude_field
@@ -242,6 +250,11 @@ def _build_slice_descriptor_summary(
         "slice_id": case_meta["simple_3d_proxy"]["slice_id"],
         "slice_index": case_meta["simple_3d_proxy"]["slice_index"],
         "z_position": case_meta["simple_3d_proxy"]["z_position"],
+        "experimental_controls": case_meta.get("experimental_controls", {}),
+        "encoder_controls": {
+            "low_signal_threshold_fraction": float(low_signal_threshold),
+            "low_signal_threshold_absolute": float(encoder_output.low_signal_threshold),
+        },
         "format_note": (
             "Bridge-style slice descriptor summary only. The format resembles bridge "
             "artifacts, but it is not a TopoStream semantic integration."
@@ -278,6 +291,7 @@ def _build_slice_descriptor_summary(
 def _build_case_summary(
     stack_artifact: StackArtifact,
     slice_results: List[Dict[str, object]],
+    low_signal_threshold: float,
 ) -> Dict[str, object]:
     sorted_slices = sorted(slice_results, key=lambda item: item["slice_index"])
     slice_rows = []
@@ -332,6 +346,14 @@ def _build_case_summary(
         "geometry_case": stack_artifact.geometry_case,
         "provenance_class": stack_artifact.provenance_class,
         "slice_count": len(sorted_slices),
+        "experimental_controls": (
+            sorted_slices[0]["descriptor_summary"].get("experimental_controls", {})
+            if sorted_slices
+            else {}
+        ),
+        "encoder_controls": {
+            "low_signal_threshold_fraction": float(low_signal_threshold),
+        },
         "simple_3d_proxy_note": (
             "This case is represented as a deterministic stack of 2D slices with "
             "controlled variation. It is a bounded proxy, not a validated 3D solver."

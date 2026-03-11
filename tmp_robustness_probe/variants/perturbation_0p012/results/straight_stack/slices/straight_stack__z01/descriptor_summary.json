@@ -1,0 +1,60 @@
+{
+  "case_id": "straight_stack",
+  "critic_interpretation": {
+    "local_only": true,
+    "note": "The bounded_complexity_index is an internal sandbox ordering aid for this simple multi-slice proxy only. It is not a performance score and not a TPMS ranking signal."
+  },
+  "descriptor_schema_id": "experimental_multi_slice_3d_slice_descriptor_summary",
+  "descriptor_stats": {
+    "acceleration_ratio": 1.6404534119556926,
+    "active_fraction": 0.75,
+    "bounded_complexity_index": 0.054083037510764015,
+    "deflection_fraction": 0.0,
+    "low_signal_fraction": 0.0,
+    "max_theta_gradient": 0.010812686165669497,
+    "mean_speed": 0.5898757425706137,
+    "mean_theta_gradient": 0.005118856612201475,
+    "non_axiality_ratio": 0.005334115752746014,
+    "reverse_fraction": 0.0,
+    "solid_fraction": 0.25,
+    "speed_cv": 0.5946994301683571,
+    "speed_p95": 0.967663674529861,
+    "theta_abs_mean_rad": 0.005333906017991001,
+    "theta_std_rad": 0.00705960710933261
+  },
+  "descriptor_tokens": [
+    "EXPERIMENTAL_SANDBOX",
+    "SIMPLE_3D_PROXY_SLICE",
+    "GEOMETRY_STACKED_STRAIGHT_CHANNEL",
+    "PROVENANCE_EXACT_ANALYTIC",
+    "AXIAL_VARIATION_LOW",
+    "DEFLECTION_LOCALIZED_NONE",
+    "ACCELERATION_BAND_MEDIUM",
+    "SOLID_IMPRINT_LOW",
+    "CRITIC_COMPLEXITY_LOW"
+  ],
+  "encoder_controls": {
+    "low_signal_threshold_absolute": 0.009696995364553207,
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.012,
+      "mode": "sinusoidal_dither",
+      "note": "Deterministic bounded sinusoidal dither applied to fluid cells only. This is a robustness stressor, not a physical noise model.",
+      "phase_seed": 7
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "format_note": "Bridge-style slice descriptor summary only. The format resembles bridge artifacts, but it is not a TopoStream semantic integration.",
+  "geometry_case": "stacked_straight_channel",
+  "provenance_class": "EXACT_ANALYTIC",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "slice_id": "straight_stack__z01",
+  "slice_index": 1,
+  "z_position": 0.5
+}

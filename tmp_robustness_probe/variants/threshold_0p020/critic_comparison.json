@@ -1,0 +1,105 @@
+{
+  "bounded_critic_summary": {
+    "observations": [
+      "straight_stack is the lowest-complexity case: an identical per-slice analytic baseline with near-zero directional spread.",
+      "obstruction_stack is the middle-complexity case: localized turning that persists across slices as the obstruction shifts.",
+      "constriction_stack is the highest-complexity case: broader slice-wide turning from the breathing constriction stack."
+    ],
+    "ordering_low_to_high": [
+      "straight_stack",
+      "obstruction_stack",
+      "constriction_stack"
+    ],
+    "ordering_rule": "ascending stack_complexity_index",
+    "recommendation": "continue",
+    "recommendation_note": "Continue means only that descriptor separation remains stable enough in this bounded multi-slice proxy to justify a later experiment. It does not validate physical realism, 3D TPMS ranking, or TopoStream semantics."
+  },
+  "case_summaries": [
+    {
+      "case_id": "straight_stack",
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_STACK",
+        "PROVENANCE_EXACT_ANALYTIC",
+        "STACK_COMPLEXITY_LOW",
+        "SLICE_VARIATION_TIGHT",
+        "STACK_DEFLECTION_LOW"
+      ],
+      "geometry_case": "stacked_straight_channel",
+      "provenance_class": "EXACT_ANALYTIC",
+      "slice_complexity_mean": 0.03878902554399257,
+      "slice_complexity_span": 0.0,
+      "slice_count": 3,
+      "slice_deflection_mean": 0.0,
+      "slice_stability_fraction": 1.0,
+      "slice_theta_std_mean": 1.8358587643600642e-16,
+      "stack_complexity_index": 0.03491012298959331
+    },
+    {
+      "case_id": "obstruction_stack",
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_STACK",
+        "PROVENANCE_SYNTHETIC",
+        "STACK_COMPLEXITY_MEDIUM",
+        "SLICE_VARIATION_TIGHT",
+        "STACK_DEFLECTION_MODERATE"
+      ],
+      "geometry_case": "stacked_offset_obstruction_channel",
+      "provenance_class": "SYNTHETIC",
+      "slice_complexity_mean": 0.259388093168687,
+      "slice_complexity_span": 0.019600806907137225,
+      "slice_count": 3,
+      "slice_deflection_mean": 0.07619047619047618,
+      "slice_stability_fraction": 1.0,
+      "slice_theta_std_mean": 0.07680996174505307,
+      "stack_complexity_index": 0.2572452809615602
+    },
+    {
+      "case_id": "constriction_stack",
+      "descriptor_tokens": [
+        "EXPERIMENTAL_SANDBOX",
+        "SIMPLE_3D_PROXY_STACK",
+        "PROVENANCE_QUASI_ANALYTICAL",
+        "STACK_COMPLEXITY_HIGH",
+        "SLICE_VARIATION_BROAD",
+        "STACK_DEFLECTION_HIGH"
+      ],
+      "geometry_case": "stacked_breathing_constriction_channel",
+      "provenance_class": "QUASI_ANALYTICAL",
+      "slice_complexity_mean": 0.5300105125571175,
+      "slice_complexity_span": 0.261270347260792,
+      "slice_count": 3,
+      "slice_deflection_mean": 0.27903225806451615,
+      "slice_stability_fraction": 0.3333333333333333,
+      "slice_theta_std_mean": 0.1464643508088256,
+      "stack_complexity_index": 0.5953915348431459
+    }
+  ],
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "low_signal_threshold_fraction": 0.02,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.0,
+      "mode": "none",
+      "note": "No perturbation applied.",
+      "phase_seed": 0
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "format_note": "This is a bounded comparison across deterministic slice stacks. It is a simple 3D proxy only, not a real-candidate ranking method.",
+  "not_proven": [
+    "Any physical realism for the synthetic slices or the stacked proxy",
+    "Any mapping from descriptor separation to hydraulic, thermal, or structural performance",
+    "Any equivalence between these descriptors and fluid vortices",
+    "Any TopoStream semantic compatibility",
+    "Any validated ranking of 3D TPMS coldplate candidates",
+    "Any physics validation"
+  ],
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "summary_schema_id": "experimental_multi_slice_3d_critic_comparison",
+  "what_this_is": "A stack of 2D slices with controlled variation, encoded slice-by-slice with the existing bridge-local path and aggregated with sandbox-only metrics."
+}

@@ -1,0 +1,60 @@
+{
+  "case_id": "obstruction_stack",
+  "critic_interpretation": {
+    "local_only": true,
+    "note": "The bounded_complexity_index is an internal sandbox ordering aid for this simple multi-slice proxy only. It is not a performance score and not a TPMS ranking signal."
+  },
+  "descriptor_schema_id": "experimental_multi_slice_3d_slice_descriptor_summary",
+  "descriptor_stats": {
+    "acceleration_ratio": 1.7386748092619742,
+    "active_fraction": 0.7291666666666666,
+    "bounded_complexity_index": 0.26749725167568184,
+    "deflection_fraction": 0.08571428571428572,
+    "low_signal_fraction": 0.0,
+    "max_theta_gradient": 0.18189881252879844,
+    "mean_speed": 0.5904739221609534,
+    "mean_theta_gradient": 0.04782149351741148,
+    "non_axiality_ratio": 0.043962409657857054,
+    "reverse_fraction": 0.0,
+    "solid_fraction": 0.2708333333333333,
+    "speed_cv": 0.6258234479957813,
+    "speed_p95": 1.0266421339873655,
+    "theta_abs_mean_rad": 0.04339161619775269,
+    "theta_std_rad": 0.07923302056173274
+  },
+  "descriptor_tokens": [
+    "EXPERIMENTAL_SANDBOX",
+    "SIMPLE_3D_PROXY_SLICE",
+    "GEOMETRY_STACKED_OFFSET_OBSTRUCTION_CHANNEL",
+    "PROVENANCE_SYNTHETIC",
+    "AXIAL_VARIATION_MEDIUM",
+    "DEFLECTION_LOCALIZED_MODERATE",
+    "ACCELERATION_BAND_HIGH",
+    "SOLID_IMPRINT_LOW",
+    "CRITIC_COMPLEXITY_MEDIUM"
+  ],
+  "encoder_controls": {
+    "low_signal_threshold_absolute": 0.01454393199611519,
+    "low_signal_threshold_fraction": 0.01
+  },
+  "experimental_controls": {
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "n_slices": 3,
+    "perturbation": {
+      "amplitude_fraction": 0.0,
+      "mode": "none",
+      "note": "No perturbation applied.",
+      "phase_seed": 0
+    }
+  },
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "format_note": "Bridge-style slice descriptor summary only. The format resembles bridge artifacts, but it is not a TopoStream semantic integration.",
+  "geometry_case": "stacked_offset_obstruction_channel",
+  "provenance_class": "SYNTHETIC",
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "slice_id": "obstruction_stack__z00",
+  "slice_index": 0,
+  "z_position": 0.0
+}

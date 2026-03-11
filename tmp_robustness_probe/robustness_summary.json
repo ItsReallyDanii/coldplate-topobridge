@@ -1,0 +1,481 @@
+{
+  "baseline_variant_id": "baseline",
+  "experimental_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+  "format_note": "This robustness pass sweeps bounded experiment controls around the stacked-slice proxy. It tests ordering stability only and does not broaden repo claims.",
+  "not_proven": [
+    "Any physical realism for the synthetic slices or the stacked proxy",
+    "Any vortex correspondence",
+    "Any TopoStream semantic compatibility",
+    "Any validated ranking of 3D TPMS coldplate candidates",
+    "Any hydraulic, thermal, structural, or manufacturing meaning",
+    "Any physics validation"
+  ],
+  "robustness_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC_ROBUSTNESS",
+  "robustness_summary": {
+    "baseline_ordering_low_to_high": [
+      "straight_stack",
+      "obstruction_stack",
+      "constriction_stack"
+    ],
+    "baseline_recommendation": "continue",
+    "baseline_variant_id": "baseline",
+    "changed_findings": [
+      "Absolute stack_complexity_index values moved under slice-count, resolution, threshold, and perturbation changes.",
+      "Some stack descriptor token bins changed under bounded variation for slice_count_5."
+    ],
+    "max_abs_stack_complexity_delta_by_case": {
+      "constriction_stack": 0.03598265462900352,
+      "obstruction_stack": 0.06514323263052121,
+      "straight_stack": 0.03491012298959318
+    },
+    "stable_findings": [
+      "The documented ordering remained straight_stack < obstruction_stack < constriction_stack across all bounded sweep variants.",
+      "The bounded recommendation remained continue across all bounded sweep variants.",
+      "The two documented stack-complexity gaps stayed above the bounded 0.08 separation threshold across all sweep variants.",
+      "Provenance classes remained explicit and unchanged for all sweep variants."
+    ],
+    "variants_with_descriptor_token_changes": [
+      "slice_count_5"
+    ],
+    "variants_with_ordering_flips": [],
+    "variants_without_ordering_flips": [
+      "baseline",
+      "slice_count_5",
+      "resolution_16x10",
+      "threshold_0p020",
+      "perturbation_0p012"
+    ],
+    "what_this_does_not_prove": [
+      "Any physical realism for the synthetic slices or the stacked proxy",
+      "Any vortex correspondence",
+      "Any TopoStream semantic compatibility",
+      "Any validated ranking of 3D TPMS coldplate candidates",
+      "Any hydraulic, thermal, structural, or manufacturing meaning",
+      "Any physics validation"
+    ],
+    "what_this_proves": [
+      "Within this bounded stacked-slice proxy, the documented ordering and gap-based descriptor separation can be checked against controlled slice-count, grid, threshold, and deterministic perturbation changes.",
+      "The robustness pass can show whether the bounded ordering flips or stays intact under those controlled changes."
+    ]
+  },
+  "sandbox_status": "EXPERIMENTAL_SANDBOX",
+  "schema_version": "1.0.0",
+  "summary_schema_id": "experimental_multi_slice_3d_critic_robustness_pass",
+  "variant_results": [
+    {
+      "changed_properties": [
+        "no material changes recorded against baseline"
+      ],
+      "critic_summary_path": "variants\\baseline\\critic_comparison.json",
+      "description": "Test baseline.",
+      "descriptor_tokens_by_case": {
+        "constriction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_QUASI_ANALYTICAL",
+          "STACK_COMPLEXITY_HIGH",
+          "SLICE_VARIATION_BROAD",
+          "STACK_DEFLECTION_HIGH"
+        ],
+        "obstruction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_SYNTHETIC",
+          "STACK_COMPLEXITY_MEDIUM",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_MODERATE"
+        ],
+        "straight_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_EXACT_ANALYTIC",
+          "STACK_COMPLEXITY_LOW",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_LOW"
+        ]
+      },
+      "documented_gap_metrics": {
+        "constriction_minus_obstruction": 0.350667949219041,
+        "documented_separation_retained": true,
+        "minimum_expected_gap": 0.08,
+        "minimum_gap": 0.22233515797196687,
+        "obstruction_minus_straight": 0.22233515797196687
+      },
+      "matches_baseline_ordering": true,
+      "ordering_flip_count": 0,
+      "ordering_flips": [],
+      "ordering_low_to_high": [
+        "straight_stack",
+        "obstruction_stack",
+        "constriction_stack"
+      ],
+      "output_root": "variants\\baseline",
+      "recommendation": "continue",
+      "run_parameters": {
+        "grid_nx": 12,
+        "grid_ny": 8,
+        "low_signal_threshold_fraction": 0.01,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "stable_properties": [
+        "ordering_low_to_high unchanged from baseline",
+        "recommendation unchanged from baseline",
+        "documented separation gaps remained above the bounded 0.08 threshold",
+        "provenance class mapping unchanged"
+      ],
+      "stack_complexity_delta_from_baseline": {
+        "constriction_stack": 0.0,
+        "obstruction_stack": 0.0,
+        "straight_stack": 0.0
+      },
+      "stack_complexity_index_by_case": {
+        "constriction_stack": 0.6079132301806012,
+        "obstruction_stack": 0.2572452809615602,
+        "straight_stack": 0.03491012298959331
+      },
+      "token_changes_from_baseline": {},
+      "variant_id": "baseline",
+      "variation_family": "baseline"
+    },
+    {
+      "changed_properties": [
+        "absolute stack_complexity_index values shifted",
+        "stack descriptor tokens changed for obstruction_stack"
+      ],
+      "critic_summary_path": "variants\\slice_count_5\\critic_comparison.json",
+      "description": "Higher slice count.",
+      "descriptor_tokens_by_case": {
+        "constriction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_QUASI_ANALYTICAL",
+          "STACK_COMPLEXITY_HIGH",
+          "SLICE_VARIATION_BROAD",
+          "STACK_DEFLECTION_HIGH"
+        ],
+        "obstruction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_SYNTHETIC",
+          "STACK_COMPLEXITY_MEDIUM",
+          "SLICE_VARIATION_MODERATE",
+          "STACK_DEFLECTION_MODERATE"
+        ],
+        "straight_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_EXACT_ANALYTIC",
+          "STACK_COMPLEXITY_LOW",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_LOW"
+        ]
+      },
+      "documented_gap_metrics": {
+        "constriction_minus_obstruction": 0.3984005656976688,
+        "documented_separation_retained": true,
+        "minimum_expected_gap": 0.08,
+        "minimum_gap": 0.21058519612234256,
+        "obstruction_minus_straight": 0.21058519612234256
+      },
+      "matches_baseline_ordering": true,
+      "ordering_flip_count": 0,
+      "ordering_flips": [],
+      "ordering_low_to_high": [
+        "straight_stack",
+        "obstruction_stack",
+        "constriction_stack"
+      ],
+      "output_root": "variants\\slice_count_5",
+      "recommendation": "continue",
+      "run_parameters": {
+        "grid_nx": 12,
+        "grid_ny": 8,
+        "low_signal_threshold_fraction": 0.01,
+        "n_slices": 5,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "stable_properties": [
+        "ordering_low_to_high unchanged from baseline",
+        "recommendation unchanged from baseline",
+        "documented separation gaps remained above the bounded 0.08 threshold",
+        "provenance class mapping unchanged"
+      ],
+      "stack_complexity_delta_from_baseline": {
+        "constriction_stack": 0.03598265462900352,
+        "obstruction_stack": -0.011749961849624319,
+        "straight_stack": 0.0
+      },
+      "stack_complexity_index_by_case": {
+        "constriction_stack": 0.6438958848096047,
+        "obstruction_stack": 0.24549531911193587,
+        "straight_stack": 0.03491012298959331
+      },
+      "token_changes_from_baseline": {
+        "obstruction_stack": {
+          "baseline_only": [
+            "SLICE_VARIATION_TIGHT"
+          ],
+          "observed_only": [
+            "SLICE_VARIATION_MODERATE"
+          ]
+        }
+      },
+      "variant_id": "slice_count_5",
+      "variation_family": "slice_count"
+    },
+    {
+      "changed_properties": [
+        "absolute stack_complexity_index values shifted"
+      ],
+      "critic_summary_path": "variants\\resolution_16x10\\critic_comparison.json",
+      "description": "Slightly finer grid.",
+      "descriptor_tokens_by_case": {
+        "constriction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_QUASI_ANALYTICAL",
+          "STACK_COMPLEXITY_HIGH",
+          "SLICE_VARIATION_BROAD",
+          "STACK_DEFLECTION_HIGH"
+        ],
+        "obstruction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_SYNTHETIC",
+          "STACK_COMPLEXITY_MEDIUM",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_MODERATE"
+        ],
+        "straight_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_EXACT_ANALYTIC",
+          "STACK_COMPLEXITY_LOW",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_LOW"
+        ]
+      },
+      "documented_gap_metrics": {
+        "constriction_minus_obstruction": 0.42132495883395504,
+        "documented_separation_retained": true,
+        "minimum_expected_gap": 0.08,
+        "minimum_gap": 0.19210204833103883,
+        "obstruction_minus_straight": 0.19210204833103883
+      },
+      "matches_baseline_ordering": true,
+      "ordering_flip_count": 0,
+      "ordering_flips": [],
+      "ordering_low_to_high": [
+        "straight_stack",
+        "obstruction_stack",
+        "constriction_stack"
+      ],
+      "output_root": "variants\\resolution_16x10",
+      "recommendation": "continue",
+      "run_parameters": {
+        "grid_nx": 16,
+        "grid_ny": 10,
+        "low_signal_threshold_fraction": 0.01,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "stable_properties": [
+        "ordering_low_to_high unchanged from baseline",
+        "recommendation unchanged from baseline",
+        "documented separation gaps remained above the bounded 0.08 threshold",
+        "provenance class mapping unchanged"
+      ],
+      "stack_complexity_delta_from_baseline": {
+        "constriction_stack": 0.005513776984392815,
+        "obstruction_stack": -0.06514323263052121,
+        "straight_stack": -0.03491012298959318
+      },
+      "stack_complexity_index_by_case": {
+        "constriction_stack": 0.613427007164994,
+        "obstruction_stack": 0.19210204833103897,
+        "straight_stack": 1.3508505824578288e-16
+      },
+      "token_changes_from_baseline": {},
+      "variant_id": "resolution_16x10",
+      "variation_family": "grid_resolution"
+    },
+    {
+      "changed_properties": [
+        "absolute stack_complexity_index values shifted"
+      ],
+      "critic_summary_path": "variants\\threshold_0p020\\critic_comparison.json",
+      "description": "Higher threshold.",
+      "descriptor_tokens_by_case": {
+        "constriction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_QUASI_ANALYTICAL",
+          "STACK_COMPLEXITY_HIGH",
+          "SLICE_VARIATION_BROAD",
+          "STACK_DEFLECTION_HIGH"
+        ],
+        "obstruction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_SYNTHETIC",
+          "STACK_COMPLEXITY_MEDIUM",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_MODERATE"
+        ],
+        "straight_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_EXACT_ANALYTIC",
+          "STACK_COMPLEXITY_LOW",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_LOW"
+        ]
+      },
+      "documented_gap_metrics": {
+        "constriction_minus_obstruction": 0.3381462538815857,
+        "documented_separation_retained": true,
+        "minimum_expected_gap": 0.08,
+        "minimum_gap": 0.22233515797196687,
+        "obstruction_minus_straight": 0.22233515797196687
+      },
+      "matches_baseline_ordering": true,
+      "ordering_flip_count": 0,
+      "ordering_flips": [],
+      "ordering_low_to_high": [
+        "straight_stack",
+        "obstruction_stack",
+        "constriction_stack"
+      ],
+      "output_root": "variants\\threshold_0p020",
+      "recommendation": "continue",
+      "run_parameters": {
+        "grid_nx": 12,
+        "grid_ny": 8,
+        "low_signal_threshold_fraction": 0.02,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "stable_properties": [
+        "ordering_low_to_high unchanged from baseline",
+        "recommendation unchanged from baseline",
+        "documented separation gaps remained above the bounded 0.08 threshold",
+        "provenance class mapping unchanged"
+      ],
+      "stack_complexity_delta_from_baseline": {
+        "constriction_stack": -0.012521695337455285,
+        "obstruction_stack": 0.0,
+        "straight_stack": 0.0
+      },
+      "stack_complexity_index_by_case": {
+        "constriction_stack": 0.5953915348431459,
+        "obstruction_stack": 0.2572452809615602,
+        "straight_stack": 0.03491012298959331
+      },
+      "token_changes_from_baseline": {},
+      "variant_id": "threshold_0p020",
+      "variation_family": "descriptor_threshold"
+    },
+    {
+      "changed_properties": [
+        "absolute stack_complexity_index values shifted"
+      ],
+      "critic_summary_path": "variants\\perturbation_0p012\\critic_comparison.json",
+      "description": "Mild perturbation.",
+      "descriptor_tokens_by_case": {
+        "constriction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_QUASI_ANALYTICAL",
+          "STACK_COMPLEXITY_HIGH",
+          "SLICE_VARIATION_BROAD",
+          "STACK_DEFLECTION_HIGH"
+        ],
+        "obstruction_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_SYNTHETIC",
+          "STACK_COMPLEXITY_MEDIUM",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_MODERATE"
+        ],
+        "straight_stack": [
+          "EXPERIMENTAL_SANDBOX",
+          "SIMPLE_3D_PROXY_STACK",
+          "PROVENANCE_EXACT_ANALYTIC",
+          "STACK_COMPLEXITY_LOW",
+          "SLICE_VARIATION_TIGHT",
+          "STACK_DEFLECTION_LOW"
+        ]
+      },
+      "documented_gap_metrics": {
+        "constriction_minus_obstruction": 0.348945360067624,
+        "documented_separation_retained": true,
+        "minimum_expected_gap": 0.08,
+        "minimum_gap": 0.2104308236995524,
+        "obstruction_minus_straight": 0.2104308236995524
+      },
+      "matches_baseline_ordering": true,
+      "ordering_flip_count": 0,
+      "ordering_flips": [],
+      "ordering_low_to_high": [
+        "straight_stack",
+        "obstruction_stack",
+        "constriction_stack"
+      ],
+      "output_root": "variants\\perturbation_0p012",
+      "recommendation": "continue",
+      "run_parameters": {
+        "grid_nx": 12,
+        "grid_ny": 8,
+        "low_signal_threshold_fraction": 0.01,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.012,
+          "mode": "sinusoidal_dither",
+          "note": "Deterministic bounded sinusoidal dither applied to fluid cells only. This is a robustness stressor, not a physical noise model.",
+          "phase_seed": 7
+        }
+      },
+      "stable_properties": [
+        "ordering_low_to_high unchanged from baseline",
+        "recommendation unchanged from baseline",
+        "documented separation gaps remained above the bounded 0.08 threshold",
+        "provenance class mapping unchanged"
+      ],
+      "stack_complexity_delta_from_baseline": {
+        "constriction_stack": 3.2443134621917835e-05,
+        "obstruction_stack": 0.0017550322860389045,
+        "straight_stack": 0.013659366558453387
+      },
+      "stack_complexity_index_by_case": {
+        "constriction_stack": 0.6079456733152231,
+        "obstruction_stack": 0.2590003132475991,
+        "straight_stack": 0.0485694895480467
+      },
+      "token_changes_from_baseline": {},
+      "variant_id": "perturbation_0p012",
+      "variation_family": "bounded_perturbation"
+    }
+  ]
+}

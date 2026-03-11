@@ -1,0 +1,88 @@
+{
+  "bridge_schema_id": "bridge_field_frame",
+  "field_dtype": "float64",
+  "field_shape": [
+    8,
+    12
+  ],
+  "has_scalar": false,
+  "input_file": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-topobridge\\tmp_robustness_profile\\variants\\baseline\\fields\\obstruction_stack\\obstruction_stack__z02.npz",
+  "input_sha256": "833e1d88ad850e23bb27ef0e25a8604cfa14d32e2914b68b8824adf19b8fad33",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 0.011161955760199927,
+  "magnitude_stats": {
+    "max": 1.1161955760199926,
+    "mean": 0.5743661422783488,
+    "min": 0.12075317235890078,
+    "std": 0.34484197509120607
+  },
+  "provenance": {
+    "experimental_case": {
+      "case_id": "obstruction_stack",
+      "description": "Straight channel with one obstruction whose position and radius vary deterministically across slices.",
+      "domain_bounds": {
+        "x_max": 1.0,
+        "x_min": 0.0,
+        "y_max": 0.6,
+        "y_min": -0.6,
+        "z_max": 1.0,
+        "z_min": 0.0
+      },
+      "experiment_id": "multi_slice_3d_critic_v1",
+      "experiment_label": "EXPERIMENTAL_SANDBOX_MULTI_SLICE_3D_CRITIC",
+      "experimental_controls": {
+        "grid_nx": 12,
+        "grid_ny": 8,
+        "n_slices": 3,
+        "perturbation": {
+          "amplitude_fraction": 0.0,
+          "mode": "none",
+          "note": "No perturbation applied.",
+          "phase_seed": 0
+        }
+      },
+      "geometry_case": "stacked_offset_obstruction_channel",
+      "geometry_parameters": {
+        "channel_height": 0.8,
+        "gap_boost_strength": 0.22,
+        "obstacle_center_x": 0.55,
+        "obstacle_center_y": 6.123233995736766e-18,
+        "obstacle_radius": 0.09,
+        "wake_strength": 0.36000000000000004
+      },
+      "physics_note": "SYNTHETIC: the slice fields are structured surrogate fields built to test whether descriptor separation survives controlled slice-to-slice variation.",
+      "provenance_class": "SYNTHETIC",
+      "scope_guardrails": [
+        "EXPERIMENTAL_SANDBOX only",
+        "No physical realism claim",
+        "No vortex correspondence claim",
+        "No TopoStream semantic compatibility claim",
+        "No validated ranking of 3D TPMS coldplate candidates",
+        "No physics validation claim"
+      ],
+      "simple_3d_proxy": {
+        "representation": "stacked_2d_slices",
+        "slice_generation_rule": "The obstruction center, radius, wake attenuation, and gap boost vary deterministically with z.",
+        "slice_id": "obstruction_stack__z02",
+        "slice_index": 2,
+        "z_position": 1.0
+      }
+    },
+    "field_frozen_at": "2026-03-11T00:00:00Z",
+    "grid_dx": 0.08333333333333333,
+    "grid_dy": 0.15,
+    "grid_nx": 12,
+    "grid_ny": 8,
+    "preprocessing": [
+      "EXPERIMENTAL_SANDBOX",
+      "multi_slice_3d_critic_case_generation"
+    ],
+    "schema_version": "1.0.0",
+    "source_artifact": "fields/obstruction_stack/obstruction_stack__z02.npz",
+    "source_commit": "dcdd37b369d61e79d2c0a5b5ce8796b219c7e3fe",
+    "source_repo": "coldplate-topobridge",
+    "source_stage": "experimental_multi_slice_3d_critic"
+  },
+  "schema_version": "1.0.0",
+  "solid_mask_fraction": 0.2708333333333333
+}
