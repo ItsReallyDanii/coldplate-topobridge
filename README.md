@@ -157,6 +157,31 @@ That means only this:
 
 It does **not** mean the repo has validated physical realism, TopoStream compatibility, or 3D candidate ranking.
 
+### Bounded robustness sweep
+
+A bounded parameter sweep was run against the stacked-slice proxy across five variants:
+`baseline`, `slice_count_5`, `resolution_16x10`, `threshold_0p020`, and `perturbation_0p012`.
+
+The sweep was entirely within the EXPERIMENTAL_SANDBOX and tested only ordering stability
+under controlled slice-count, grid-resolution, descriptor-threshold, and deterministic-dither changes.
+
+**Stable across all variants:**
+- Ordering stayed `straight_stack < obstruction_stack < constriction_stack` — no flips.
+- Recommendation stayed `continue`.
+- Every variant kept a documented minimum gap above the 0.08 bounded threshold.
+- Provenance classes remained explicit and unchanged.
+
+**Observed under bounded variation:**
+- Absolute `stack_complexity_index` values shifted under slice-count, resolution, threshold,
+  and perturbation changes. This is expected for sandbox-only ordering metrics.
+- Ablation-level descriptor token-bin changes were observed for `slice_count_5`
+  (`SLICE_VARIATION_TIGHT` → `SLICE_VARIATION_MODERATE` for `obstruction_stack`).
+  This is reported honestly and is not treated as an ordering failure.
+
+This robustness sweep does **not** validate physical realism, vortex correspondence,
+TopoStream semantic compatibility, 3D TPMS candidate ranking, or any hydraulic, thermal,
+structural, or manufacturing meaning.
+
 ---
 
 ## What this work proves
@@ -165,6 +190,8 @@ At the current stage, this repo supports the following claims:
 
 - deterministic bounded 2D descriptor separation across the defined sandbox cases
 - deterministic bounded multi-slice descriptor separation across the defined stacked-slice proxy cases
+- ordering stability of the stacked-slice proxy under a bounded parameter sweep (slice-count,
+  grid-resolution, descriptor-threshold, deterministic dither) — no ordering flips observed
 - explicit provenance separation across:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
@@ -329,7 +356,7 @@ That is exactly why it is useful.
 
 ## Proof / non-proof boundary
 
-The current implementation proves deterministic bounded 2D descriptor separation across the defined sandbox cases and deterministic bounded multi-slice descriptor separation across the defined stacked-slice proxy cases, with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). It does **not** prove physical realism, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, does **not** validate ranking of 3D TPMS coldplate candidates, does **not** imply hydraulic, thermal, structural, or manufacturing meaning, and does **not** validate physics.
+The current implementation proves deterministic bounded 2D descriptor separation across the defined sandbox cases and deterministic bounded multi-slice descriptor separation across the defined stacked-slice proxy cases, with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). A bounded parameter sweep of the stacked-slice proxy confirmed the documented ordering (`straight_stack < obstruction_stack < constriction_stack`) was stable across all tested variants, with the documented minimum gap above 0.08 retained in every variant; ablation-level token-bin shifts were observed at `slice_count_5` and `resolution_10x6` and are reported honestly. It does **not** prove physical realism, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, does **not** validate ranking of 3D TPMS coldplate candidates, does **not** imply hydraulic, thermal, structural, or manufacturing meaning, and does **not** validate physics.
 
 ---
 

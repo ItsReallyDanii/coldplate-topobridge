@@ -110,6 +110,37 @@ This ordering is local to this sandbox setup only.
 
 ---
 
+## Bounded Robustness Sweep Result
+
+A bounded parameter sweep was run across five variants (`baseline`, `slice_count_5`,
+`resolution_16x10`, `threshold_0p020`, `perturbation_0p012`) to test whether the
+documented ordering was stable under controlled changes to slice count, grid resolution,
+descriptor threshold, and deterministic sinusoidal dither.
+
+**Stable findings:**
+- The documented ordering `straight_stack < obstruction_stack < constriction_stack`
+  held across all five variants — zero ordering flips observed.
+- The bounded recommendation (`continue`) held across all five variants.
+- Every variant kept the documented minimum gap above the 0.08 bounded threshold.
+- Provenance classes remained explicit and unchanged for all variants.
+
+**Observed under bounded variation (reported honestly, not overstated):**
+- Absolute `stack_complexity_index` values shifted under slice-count, resolution, threshold,
+  and perturbation changes. This is expected behavior for sandbox-only ordering metrics.
+- Ablation-level token-bin changes were observed for `slice_count_5`
+  (`SLICE_VARIATION_TIGHT` → `SLICE_VARIATION_MODERATE` for `obstruction_stack`).
+  The ordering and gap were unaffected. This is not treated as an ordering failure.
+
+**This sweep does NOT prove:**
+- Physical realism
+- Vortex correspondence
+- TopoStream semantic compatibility
+- Validated ranking of 3D TPMS coldplate candidates
+- Hydraulic, thermal, structural, or manufacturing meaning
+- Physics validation
+
+---
+
 ## Recommendation
 
 Recommendation: `continue`

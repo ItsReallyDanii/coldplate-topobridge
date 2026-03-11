@@ -22,6 +22,7 @@ What the prototype does:
 - writes per-slice `field_contract.json`, `signatures.jsonl`, `summary.json`, and `descriptor_summary.json`
 - writes a per-case `case_summary.json`
 - writes `critic_comparison.json` for a bounded stack-level comparison
+- supports a bounded robustness sweep via `run_robustness.py`
 
 What it does not do:
 - prove physical realism
@@ -31,11 +32,30 @@ What it does not do:
 - imply hydraulic, thermal, structural, or manufacturing meaning
 - validate physics
 
-Run:
+Run (demo):
 
 ```powershell
 python experiments\multi_slice_3d_critic\run_demo.py --output-root C:\tmp\multi_slice_3d_critic_demo
 ```
+
+Run (bounded robustness sweep):
+
+```powershell
+python experiments\multi_slice_3d_critic\run_robustness.py --output-root C:\tmp\multi_slice_3d_critic_robustness
+```
+
+Robustness sweep result (bounded):
+- Ordering `straight_stack < obstruction_stack < constriction_stack` was stable across all
+  tested variants (baseline, slice_count_5, resolution_16x10, threshold_0p020,
+  perturbation_0p012) — zero ordering flips.
+- Recommendation stayed `continue` across all variants.
+- Every variant kept the minimum documented gap above the 0.08 bounded threshold.
+- Ablation-level token-bin changes were observed for `slice_count_5` only
+  (`SLICE_VARIATION_TIGHT` → `SLICE_VARIATION_MODERATE` for `obstruction_stack`).
+  Ordering and gap were unaffected.
+- The sweep does NOT prove physical realism, vortex correspondence, TopoStream
+  compatibility, 3D ranking, or any hydraulic, thermal, structural, or
+  manufacturing meaning.
 
 Outputs:
 - `fields/<case>/stack_manifest.json`
