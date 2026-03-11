@@ -65,11 +65,9 @@ summaries only.
 
 ## What This Proves
 
-- The sandbox can generate deterministic 2D field artifacts for three simple cases.
-- The three cases yield different structured descriptor summaries.
-- Existing bridge-style encoding is reusable as a bounded descriptor layer for
-  simple 2D critic experiments.
-- Explicit provenance labeling can cleanly separate `EXACT_ANALYTIC`,
+- The sandbox produces deterministic bounded 2D descriptor separation across the
+  defined cases.
+- Explicit provenance labeling separates `EXACT_ANALYTIC`,
   `QUASI_ANALYTICAL`, and `SYNTHETIC` cases without hiding approximation status.
 
 ---

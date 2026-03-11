@@ -1,44 +1,87 @@
-# AGENT_MISSION.md
-# Bridge Agent Mission — coldplate-topobridge
-# Stage: 1 (Read-only bridge layer)
-# Date: 2026-03-10
+# coldplate-topobridge — bounded audit pass
 
-## Purpose
+Audit the current `coldplate-topobridge` repository after the `analytical_2d_critic` addition.
 
-Build the smallest credible, evidence-first thin bridge between:
-- **coldplate-design-engine** (geometry + metric evaluation for cold-plate internal architectures)
-- **topostream_stage0_specs** (XY/clock-model spin-topology stream for physical phase analysis)
+## Goal
+Verify that the repo is internally consistent and that all documentation preserves the exact experimental claim boundary.
 
-This bridge is a **read-only ingestion layer** only. It does not modify either parent repo.
-It does not claim integration. It does not claim topology-aware design is achieved.
+## Files to inspect
+- `README.md`
+- `experiments/analytical_2d_critic/README.md`
+- `docs/EXPERIMENT_ANALYTICAL_2D_CRITIC.md`
+- `tests/test_analytical_2d_critic.py`
 
-## What This Bridge Does (Stage 1)
+## Required checks
 
-1. Reads a frozen 2D field artifact (u, v, optional scalar, solid_mask + provenance metadata)
-   produced externally and conforming to `docs/FIELD_CONTRACT.md`.
-2. Validates artifact provenance (hash, source, shape, dtype).
-3. Encodes the field into a **bridge-local signature stream** (angle + low-signal mask + descriptors).
-4. Emits a deterministic artifact bundle: `field_contract.json`, `signatures.jsonl`,
-   `summary.json`, `manifest.json`.
+### 1) Claim boundary consistency
+Confirm that all wording stays aligned with this exact boundary:
 
-## What This Bridge Does NOT Do
+**What this work proves**
+- deterministic bounded 2D descriptor separation across the defined sandbox cases
+- explicit provenance separation across:
+  - `EXACT_ANALYTIC`
+  - `QUASI_ANALYTICAL`
+  - `SYNTHETIC`
 
-- Does NOT import or execute parent repo internals.
-- Does NOT modify either parent repo.
-- Does NOT produce TopoStream-schema-compatible tokens (that is a future stage decision).
-- Does NOT claim spin defects == fluid vortices.
-- Does NOT claim "topology-aware design stack" is achieved.
-- Does NOT claim scientific validity for any mapping.
+**What this work does NOT prove**
+- physical realism for synthetic cases
+- vortex correspondence
+- TopoStream semantic compatibility
+- validation of ranking for 3D TPMS coldplate candidates
 
-## Escalation Conditions
+### 2) Repo framing
+Confirm the root `README.md` presents this repository as:
+- a bridge / methodology artifact
+- an experimental descriptor sandbox
+- not a validated physics-ranking engine
+- not a full 3D coldplate validation repo
 
-Stop and write a blocker report if:
-1. No stable field artifact is available to ingest.
-2. Proceeding requires importing parent repo internals at runtime.
-3. Semantic meaning of the bridge signature stream requires a physics analogy not documented here.
-4. Bridge-local schema is insufficient and TopoStream schema *changes* seem required.
+### 3) Provenance terminology
+Check that provenance labels are used consistently everywhere:
+- `EXACT_ANALYTIC`
+- `QUASI_ANALYTICAL`
+- `SYNTHETIC`
 
-## Repair Policy
+Flag any drift, synonym use, capitalization mismatch, or ambiguous phrasing.
 
-- Max 2 repair loops per failure class.
-- On 3rd failure in same class: stop and write `BLOCKER_REPORT.md`.
+### 4) Experimental scope discipline
+Check that no file accidentally overstates:
+- “validation”
+- “compatibility”
+- “physical correspondence”
+- “3D ranking power”
+- “vortex truth”
+
+If any wording implies stronger claims than the implemented sandbox supports, tighten it.
+
+### 5) Test/document alignment
+Confirm the tests and docs agree on:
+- implemented cases
+- expected bounded ordering
+- deterministic behavior
+- recommendation status meaning
+
+## Constraints
+- Do NOT expand scope.
+- Do NOT add new experiments.
+- Do NOT modify validated Stage 4 files.
+- Do NOT introduce new scientific claims.
+- If edits are needed, keep them minimal and limited to consistency/documentation corrections.
+
+## Return format
+Return exactly:
+
+### Verdict
+A short verdict on whether the repo is currently consistent and honest.
+
+### Issues found
+A concise bullet list of any inconsistencies, overclaims, stale wording, or naming drift.
+
+### Files changed
+List exact files changed, or say `none`.
+
+### Wording tightened
+Quote the exact wording that was corrected.
+
+### Final claim boundary
+Provide one clean paragraph stating the proof / non-proof boundary for this repo exactly as supported by the current implementation.

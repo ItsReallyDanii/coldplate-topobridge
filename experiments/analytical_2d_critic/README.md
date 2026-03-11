@@ -20,9 +20,10 @@ What the prototype does:
 - writes `critic_comparison.json` for a bounded three-case comparison
 
 What it does not do:
-- validate physical realism for the obstruction field
-- claim that any descriptor corresponds to a real vortex
-- claim ranking power for 3D TPMS coldplate candidates
+- prove physical realism for the synthetic obstruction field
+- prove vortex correspondence
+- prove TopoStream semantic compatibility
+- validate ranking for 3D TPMS coldplate candidates
 
 Run:
 

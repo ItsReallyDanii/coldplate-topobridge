@@ -37,6 +37,12 @@ def test_analytical_2d_critic_demo_is_deterministic_and_distinct(tmp_path):
     critic_b = run_demo(out_b)
 
     assert critic_a == critic_b
+    assert critic_a["bounded_critic_summary"]["ordering_low_to_high"] == [
+        "straight_channel",
+        "single_obstruction",
+        "constricted_channel",
+    ]
+    assert critic_a["bounded_critic_summary"]["recommendation"] == "continue"
 
     expected_classes = {
         "straight_channel": "EXACT_ANALYTIC",

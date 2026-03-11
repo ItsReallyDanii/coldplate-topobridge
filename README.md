@@ -136,7 +136,6 @@ At the current stage, this repo supports the following claims:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
   - `SYNTHETIC`
-- the bridge-style descriptor layer is stable enough in this bounded setting to justify a later, still-bounded follow-up experiment
 
 ---
 
