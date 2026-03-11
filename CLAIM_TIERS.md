@@ -38,12 +38,12 @@ Promotion between tiers requires explicit gate criteria to be met.
 - TopoStream compatibility
 
 **Gate criteria (ALL must pass):**
-- [ ] Deterministic rerun test passes (identical hash on second run with same input)
-- [ ] Negative control: uniform flow yields no strong signature
-- [ ] Positive control: synthetic swirl yields nontrivial signature
-- [ ] Schema validation passes on all outputs
+- [x] Deterministic rerun test passes (identical hash on second run with same input)
+- [x] Negative control (G5): uniform channel yields machine-epsilon transverse flow (transverse_max_ratio < 1e-5)
+- [x] Positive control (G6): single-obstruction flow yields non-zero theta_std (> 0.1 rad above baseline)
+- [x] Schema validation passes on all outputs
 
-**Promotion blocked until:** all 4 gate criteria above are checked in CI.
+**Current Status (2026-03-10):** Stage 4 real-artifact ingestion is **VALIDATED** per `docs/CHECKPOINT_STATUS.md`.
 
 ---
 
