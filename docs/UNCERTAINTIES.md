@@ -226,7 +226,7 @@ correspond to physical flow streamlines or resolved CFD, escalate and reject.
 
 **Description:** In a quantitative slice-sweep audit across z={10,15,20,25,30,35,40}, the variance of metrics like `theta_std` within a single candidate (due to slice choice) was found to be ~20x larger than the mean difference between candidate_01 and candidate_02. The signal-to-noise ratio is < 0.2.
 
-This definitively proves that a single 2D slice is mathematically incapable of robustly ranking or describing the flow complexity of a 3D TPMS manifold. The metrics do not monotonically separate the candidates.
+This demonstrates that for the tested TPMS manifolds, a single 2D slice is not a reliable structural proxy for holistic 3D differences. The metrics do not monotonically separate the candidates across slices.
 
 **Impact:** The bridge's output signatures and summaries function correctly as software artifacts (they are deterministic per-slice), but they are strictly descriptor metadata for a *specific* cross-section.
 
