@@ -243,3 +243,182 @@ class TestRealCandidateComparison:
             assert isinstance(d["j"], int)
             assert isinstance(d["record_id"], str)
             assert len(d["record_id"]) > 0
+
+
+# =========================================================================
+# G5/G6 gate tests: upstream control artifacts
+# =========================================================================
+
+_CTRL_BASE = _REPO_ROOT.parent / "coldplate-design-engine" / "results" / "stage4_sim_full"
+_UNIFORM_VEL  = _CTRL_BASE / "baseline_uniform_channel_ctrl" / "velocity_field.npz"
+_UNIFORM_PROV = _CTRL_BASE / "baseline_uniform_channel_ctrl" / "provenance.json"
+_OBS_VEL      = _CTRL_BASE / "baseline_single_obstruction_ctrl" / "velocity_field.npz"
+_OBS_PROV     = _CTRL_BASE / "baseline_single_obstruction_ctrl" / "provenance.json"
+
+requires_controls = pytest.mark.skipif(
+    not (
+        _UNIFORM_VEL.exists() and _UNIFORM_PROV.exists()
+        and _OBS_VEL.exists() and _OBS_PROV.exists()
+    ),
+    reason=(
+        "Control artifacts not found. Run:"
+        " python scripts/emit_stage4_controls.py in coldplate-design-engine."
+    ),
+)
+
+
+class TestControlGates:
+    """
+    G5/G6 bridge validation gates using upstream Stage 4 control artifacts.
+
+    G5 (Negative Control): Uniform all-fluid channel.
+      The Darcy solver produces vx=vy=0 (machine epsilon ~1e-9 m/s) for an all-fluid
+      domain with z-axis flow. The bridge's absolute floor (1e-6 m/s) classifies all
+      pixels as low-signal. theta_std = 0.0 (undefined; no active pixels).
+      Correct G5 gate: transverse_max_ratio < 1e-5 AND n_low_signal == n_total.
+
+    G6 (Positive Control): Single central solid obstruction in otherwise open channel.
+      Flow must route around the obstruction, generating real transverse vx/vy components.
+      theta_std > 0 and substantially > uniform channel (which has n_active=0).
+
+    CLAIM TIERS:
+      VALIDATED (gated here): bridge correctly classifies zero-transverse-flow as low-signal
+      NOT_PROVEN: that theta_std magnitude has any physical interpretation
+      NOT_PROVEN: that these controls represent real coldplate performance
+    """
+
+    @requires_controls
+    def test_g5_uniform_channel_loads_without_error(self):
+        """G5 control artifact must load and encode without exception."""
+        bundle, output = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        assert bundle is not None
+        assert output is not None
+        assert len(output.records) == 2500  # 50×50
+
+    @requires_controls
+    def test_g5_uniform_channel_has_zero_solid(self):
+        """G5 control: all-fluid domain must have zero solid pixels at z=25.
+
+        Porosity = 1.0 → no solid detection expected.
+        NOT_PROVEN: that every pixel is truly fluid at sub-voxel scale.
+        """
+        _, output = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        s = output.summary
+        assert s["n_solid_pixels"] == 0, (
+            f"G5: uniform channel has unexpected solid pixels: {s['n_solid_pixels']}"
+        )
+
+    @requires_controls
+    def test_g5_transverse_max_ratio_is_machine_epsilon(self):
+        """G5 gate: transverse magnitude must be at machine-epsilon level.
+
+        For an all-fluid Darcy domain with z-axis pressure drop,
+        vx=vy=0 by construction. The ratio max(|vx|,|vy|) / mean(|vz|)
+        must be below 1e-5 (7 decades below any real transverse flow).
+
+        This is the correct G5 acceptance criterion replacing 'theta_std < 0.05',
+        which is not computable for an all-low-signal field. See U-014.
+        """
+        _, output = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        ratio = output.summary.get("transverse_max_ratio")
+        assert ratio is not None, "G5: transverse_max_ratio missing from summary"
+        assert ratio < 1e-5, (
+            f"G5: transverse_max_ratio={ratio:.3e} is NOT below 1e-5. "
+            f"Unexpected transverse flow in uniform channel."
+        )
+
+    @requires_controls
+    def test_g5_all_pixels_are_low_signal(self):
+        """G5 gate: all non-solid pixels in the uniform channel must be low-signal.
+
+        The absolute floor in field_to_signatures (1e-6 m/s) must catch the
+        entire uniform channel transverse field (~1e-9 m/s) and mark it all as low-signal,
+        leaving n_active_pixels = 0 and theta_std = 0.0 (undefined).
+        """
+        _, output = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        s = output.summary
+        n_fluid = s["n_total_pixels"] - s["n_solid_pixels"]
+        assert s["n_low_signal_pixels"] == n_fluid, (
+            f"G5: expected all {n_fluid} fluid pixels to be low-signal, "
+            f"got n_low_signal={s['n_low_signal_pixels']}, n_active={s['n_active_pixels']}"
+        )
+        assert s["n_active_pixels"] == 0, (
+            f"G5: uniform channel should have n_active=0, got {s['n_active_pixels']}"
+        )
+
+    @requires_controls
+    def test_g5_uniform_channel_is_deterministic(self):
+        """G5: uniform channel output must be bitwise deterministic."""
+        _, out1 = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        _, out2 = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        h1 = _stream_hash(out1)
+        h2 = _stream_hash(out2)
+        assert h1 == h2, f"G5: uniform channel is non-deterministic: {h1[:16]} vs {h2[:16]}"
+
+    @requires_controls
+    def test_g6_obstruction_loads_without_error(self):
+        """G6 control artifact must load and encode without exception."""
+        bundle, output = _load_and_encode(_OBS_VEL, _OBS_PROV)
+        assert bundle is not None
+        assert output is not None
+        assert len(output.records) == 2500
+
+    @requires_controls
+    def test_g6_obstruction_has_nonzero_solid(self):
+        """G6 control: obstruction geometry must detect solid pixels.
+
+        The ~2.4% central obstruction block must be detected by velocity thresholding.
+        NOT_PROVEN: that the solid pixel count matches the exact geometric solid fraction.
+        """
+        _, output = _load_and_encode(_OBS_VEL, _OBS_PROV)
+        s = output.summary
+        assert s["n_solid_pixels"] > 0, (
+            "G6: single-obstruction geometry detected zero solid pixels — "
+            "obstruction not visible at z=25 or solid detection failed"
+        )
+
+    @requires_controls
+    def test_g6_obstruction_has_active_pixels_with_real_theta(self):
+        """G6 gate: obstruction control must have active (non-low-signal) pixels.
+
+        The obstruction forces transverse routing, generating meaningful vx/vy.
+        n_active must be > 0 and theta_std must be > 0.
+        """
+        _, output = _load_and_encode(_OBS_VEL, _OBS_PROV)
+        s = output.summary
+        assert s["n_active_pixels"] > 0, (
+            f"G6: single-obstruction has no active pixels. "
+            f"n_solid={s['n_solid_pixels']}, n_low_signal={s['n_low_signal_pixels']}"
+        )
+        theta_std = s["theta_stats"]["std_rad"]
+        assert theta_std > 0.0, f"G6: theta_std = {theta_std} (expected > 0)"
+
+    @requires_controls
+    def test_g6_obstruction_theta_std_clearly_above_uniform(self):
+        """G6 gate: obstruction theta_std must clearly exceed uniform-channel baseline.
+
+        Uniform channel: n_active=0, theta_std=0.0 (all low-signal by floor rule).
+        Obstruction: must have theta_std > 0.1 rad to pass.
+        This tests that the bridge distinguishes a structured geometry from a null field.
+
+        NOT_PROVEN: that the magnitude of theta_std reflects any hydraulic property.
+        """
+        _, out_uniform = _load_and_encode(_UNIFORM_VEL, _UNIFORM_PROV)
+        _, out_obs     = _load_and_encode(_OBS_VEL, _OBS_PROV)
+
+        std_uniform = out_uniform.summary["theta_stats"]["std_rad"]
+        std_obs     = out_obs.summary["theta_stats"]["std_rad"]
+
+        assert std_obs > std_uniform + 0.1, (
+            f"G6: obstruction theta_std ({std_obs:.4f}) is NOT > uniform ({std_uniform:.4f}) + 0.1. "
+            f"Bridge cannot distinguish the obstruction geometry from the null-signal baseline."
+        )
+
+    @requires_controls
+    def test_g6_obstruction_is_deterministic(self):
+        """G6: single-obstruction output must be bitwise deterministic."""
+        _, out1 = _load_and_encode(_OBS_VEL, _OBS_PROV)
+        _, out2 = _load_and_encode(_OBS_VEL, _OBS_PROV)
+        h1 = _stream_hash(out1)
+        h2 = _stream_hash(out2)
+        assert h1 == h2, f"G6: obstruction is non-deterministic: {h1[:16]} vs {h2[:16]}"

@@ -8,8 +8,8 @@
   "has_scalar": true,
   "input_file": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\baseline_uniform_channel_ctrl\\velocity_field.npz",
   "input_sha256": "fdd0030428f0d9ca1c984b59d1d2e29d9ff76fc1a8d8ddb629b408aa816cfc68",
-  "low_signal_fraction": 0.0044,
-  "low_signal_threshold": 4.661725973606036e-11,
+  "low_signal_fraction": 1.0,
+  "low_signal_threshold": 4.661725973606036e-09,
   "magnitude_stats": {
     "max": 4.661725973606036e-09,
     "mean": 9.345508763134788e-10,

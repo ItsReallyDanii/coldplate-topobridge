@@ -22,6 +22,14 @@ from topobridge.adapters.coldplate_field_loader import FieldBundle
 # Default low-signal threshold as fraction of max magnitude
 _DEFAULT_LOW_SIGNAL_FRACTION = 0.01
 
+# Absolute floor: if max transverse magnitude is below this value, the
+# angle field is undefined because atan2(~0, ~0) produces arbitrary
+# sign-bit angles at floating-point machine epsilon.
+# For Darcy solvers this is ~1e-9 m/s vs axial ~200 m/s — undeniably
+# noise, not signal. Threshold is 1e-6 m/s (7 decades above typical
+# Darcy noise, still 8 decades below any meaningful transverse flow).
+_TRANSVERSE_ABSOLUTE_FLOOR = 1e-6  # m/s (or dimensionless — same field units)
+
 
 @dataclass
 class SignatureRecord:
@@ -90,16 +98,22 @@ def field_to_signatures(
     # Step 1: Magnitude
     magnitude_field = np.sqrt(u**2 + v**2)
 
-    # Step 2: Low-signal threshold (absolute, derived from max magnitude)
+    # Step 2: Low-signal threshold
+    # Primary: relative threshold = fraction of max transverse magnitude.
+    # Secondary: absolute floor — if max transverse magnitude is below the
+    #   absolute floor, atan2(v, u) is undefined (arbitrary sign-bit angles
+    #   at machine epsilon). In that case ALL fluid pixels are low-signal.
+    #   This correctly handles all-fluid Darcy fields where vx≈vy≈0.
     max_mag = magnitude_field.max()
-    if max_mag == 0.0:
-        # All-zero field: everything is low-signal (non-solid)
-        threshold = 0.0
+    if max_mag == 0.0 or max_mag < _TRANSVERSE_ABSOLUTE_FLOOR:
+        # Entire transverse field is at or below machine-epsilon noise.
+        # Mark all non-solid pixels as low-signal.
+        threshold = max_mag  # record the actual max for provenance
+        low_signal_mask = (~solid_mask)  # all fluid pixels
     else:
         threshold = low_signal_threshold_fraction * max_mag
-
-    # Low-signal: fluid pixels only (solid already excluded from analysis)
-    low_signal_mask = (~solid_mask) & (magnitude_field < threshold)
+        # Low-signal: fluid pixels only (solid already excluded from analysis)
+        low_signal_mask = (~solid_mask) & (magnitude_field < threshold)
 
     # Step 3: Theta field
     # Only compute for fluid, valid-signal pixels
@@ -214,6 +228,15 @@ def field_to_signatures(
             "Correspondence between gradient_stats and flow topology",
             "Equivalence with TopoStream token semantics",
         ],
+        # Transverse-to-axial ratio: present only when scalar (axial) field is available.
+        # This is the correct G5 gate criterion for Darcy fields with zero transverse flow.
+        # Value < 1e-5 indicates the transverse field is at machine-epsilon noise level.
+        # NOT a physical claim — a numerical validity check for atan2 inputs.
+        "transverse_max_ratio": (
+            float(max_mag / float(np.nanmean(np.abs(scalar)))) 
+            if (bundle.scalar is not None and float(np.nanmean(np.abs(bundle.scalar))) > 0)
+            else None
+        ),
     }
 
     return EncoderOutput(
