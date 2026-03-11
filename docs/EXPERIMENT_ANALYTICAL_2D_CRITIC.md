@@ -74,7 +74,7 @@ summaries only.
 
 ## What This Does NOT Prove
 
-- It does not prove physical realism for the obstruction field.
+- It does not prove physical realism for synthetic cases.
 - It does not prove that descriptor complexity predicts hydraulic, thermal,
   or manufacturing performance.
 - It does not prove that any descriptor corresponds to a real fluid vortex.

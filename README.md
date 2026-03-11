@@ -130,9 +130,8 @@ It does **not** mean the repo has validated real 3D ranking power.
 
 At the current stage, this repo supports the following claims:
 
-- the sandbox is deterministic
-- the three bounded 2D cases produce different structured descriptor summaries
-- provenance separation is explicit and clean across:
+- deterministic bounded 2D descriptor separation across the defined sandbox cases
+- explicit provenance separation across:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
   - `SYNTHETIC`
@@ -143,10 +142,10 @@ At the current stage, this repo supports the following claims:
 
 This repo does **not** prove any of the following:
 
-- physical realism for the synthetic obstruction field
+- physical realism for synthetic cases
 - vortex correspondence
-- semantic compatibility with TopoStream
-- validity for ranking 3D TPMS coldplate candidates
+- TopoStream semantic compatibility
+- validation of ranking for 3D TPMS coldplate candidates
 - experimental performance claims
 - hardware usefulness
 - fabrication readiness
@@ -281,7 +280,7 @@ That is exactly why it is useful.
 
 ## Proof / non-proof boundary
 
-The current implementation proves that a bounded analytical 2D sandbox can deterministically generate structured bridge-style descriptor summaries across simple cases with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). It does **not** prove physical realism for synthetic cases, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, and does **not** validate ranking of 3D TPMS coldplate candidates.
+The current implementation proves deterministic bounded 2D descriptor separation across the defined sandbox cases with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). It does **not** prove physical realism for synthetic cases, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, and does **not** validate ranking of 3D TPMS coldplate candidates.
 
 ---
 
