@@ -37,3 +37,8 @@ Thumbs.db
 
 # Temporary test outputs
 /tmp/
+
+# Robustness probe / profile run outputs (transient sweep outputs, not source truth)
+tmp_robustness_probe/
+tmp_robustness_probe2/
+tmp_robustness_profile/
