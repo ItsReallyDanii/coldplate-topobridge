@@ -35,7 +35,9 @@ Promotion between tiers requires explicit gate criteria to be met.
 **Does NOT imply:**
 - Physical correctness
 - Statistical significance
-- TopoStream compatibility
+- 3D geometry ranking or slice-invariant ordering
+- Hydraulic, thermal, or structural performance proxy value
+- TopoStream compatibility or semantic correspondence
 
 **Gate criteria (ALL must pass):**
 - [x] Deterministic rerun test passes (identical hash on second run with same input)
@@ -43,7 +45,7 @@ Promotion between tiers requires explicit gate criteria to be met.
 - [x] Positive control (G6): single-obstruction flow yields non-zero theta_std (> 0.1 rad above baseline)
 - [x] Schema validation passes on all outputs
 
-**Current Status (2026-03-10):** Stage 4 real-artifact ingestion is **VALIDATED** per `docs/CHECKPOINT_STATUS.md`.
+**Current Status (2026-03-10):** Stage 4 real-artifact ingestion is **VALIDATED** only for the current Stage 4 software/control protocol per `docs/CHECKPOINT_STATUS.md`. No broader ranking, performance, or TopoStream-semantic claim is earned from current repo evidence.
 
 ---
 

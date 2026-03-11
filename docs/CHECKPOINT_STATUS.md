@@ -4,13 +4,14 @@
 
 ## 1. Project Status Summary
 
-The `coldplate-topobridge` is currently in a **VALIDATED** state for its Stage 4 real-artifact ingestion and 2D-slice encoding pipeline.
+The `coldplate-topobridge` is currently in a **VALIDATED** state only for the current Stage 4 software/control protocol covering real-artifact ingestion and 2D-slice encoding.
 
 - **Bridge Scaffold**: Functional. Implements a deterministic pipeline from 2D velocity slices to signature streams.
 - **Real Stage 4 Ingestion**: Verified. `Stage4SliceConfig` correctly loads `.npz` velocity fields from `coldplate-design-engine` and applies documented solid/low-signal thresholds.
 - **Control Validation**: G5 (Negative Control) and G6 (Positive Control) pass. The bridge correctly identifies zero-transverse flow via `transverse_max_ratio` and distinguishes structured obstructions from uniform flow.
 - **Usefulness Audit**: Complete. Quantitative analysis confirms that while metrics are deterministic, their inter-candidate signal for the tested TPMS variants is significantly smaller than intra-candidate slice sensitivity (SNR < 0.2).
 - **Testing**: 61/61 tests pass (`pytest`), covering schema integrity, adapter logic, and gate requirements.
+- **Current claim sources**: Use this file, `CLAIM_TIERS.md`, `docs/METRIC_USEFULNESS_REPORT.md`, and `docs/CLAIM_AUDIT_REPORT.md` for the current claim boundary. `docs/REAL_COMPARISON_REPORT.md` and `docs/CONTROL_GAP_PACKET.md` are historical snapshots and still contain pre-validation language.
 
 ---
 
@@ -53,4 +54,4 @@ python scripts/slice_sweep.py
 
 ## 4. Final Conclusion
 
-The bridge is a stable, deterministic software adapter for 2D velocity slices. It successfully bridges the gap from raw CFD-proxy artifacts to bridge-local signature streams with high numerical integrity. It should be used as a structural descriptor of specific cross-sections, and not as a holistic performance ranking tool for the 3D TPMS manifolds tested.
+`coldplate-topobridge` is **VALIDATED** only for the current Stage 4 software/control protocol: it deterministically ingests current Stage 4 velocity artifacts, slices them to 2D, emits schema-valid bridge-local outputs, and passes the present G5/G6 control gates. For the tested diamond TPMS pair, the current 2D slice metrics are not validated ranking proxies. No hydraulic, thermal, structural, holistic 3D, or TopoStream-semantic claim is supported.
