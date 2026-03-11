@@ -15,24 +15,25 @@ It is a **bridge / methodology artifact** with an experimental sandbox.
 
 ## Status
 
-**Current status:** active bridge repo with a completed bounded 2D analytical critic sandbox.
+**Current status:** active bridge repo with a completed bounded 2D analytical critic sandbox and a bounded multi-slice / simple 3D proxy critic sandbox.
 
 ### What is implemented
 - Read-only experimental handling of upstream coldplate-style field artifacts
 - Bridge-local descriptor generation and packaging
 - Deterministic sandbox field generation for simple 2D cases
+- Deterministic stacked-slice sandbox generation for a simple 3D proxy
 - Explicit provenance labeling for generated cases:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
   - `SYNTHETIC`
-- Tests for determinism, controls, and analytical 2D critic behavior
+- Tests for determinism, controls, analytical 2D critic behavior, and multi-slice simple 3D proxy critic behavior
 - Documentation that explicitly separates:
   - what is proven
   - what is not proven
   - what remains experimental
 
 ### What is **not** claimed
-- No proof of physical realism for synthetic sandbox cases
+- No proof of physical realism for sandbox cases or stacked-slice proxies
 - No proof of vortex correspondence
 - No proof of TopoStream semantic compatibility
 - No validation of ranking for 3D TPMS coldplate candidates
@@ -76,13 +77,12 @@ bounded field input
     -> explicit proof / non-proof boundary
 ```
 
-The current implemented experimental lane is the **analytical 2D critic sandbox**, which creates three simple cases:
+The implemented experimental lanes are:
 
-- `straight_channel`
-- `single_obstruction`
-- `constricted_channel`
+- the **analytical 2D critic sandbox** with `straight_channel`, `single_obstruction`, and `constricted_channel`
+- the **multi-slice / simple 3D proxy critic sandbox** with `straight_stack`, `obstruction_stack`, and `constriction_stack`
 
-These are intentionally narrow and bounded. They exist to test whether the descriptor layer can produce **stable, structured separation** across simple cases without overclaiming what that means.
+These lanes are intentionally narrow and bounded. They exist to test whether the descriptor layer can produce stable, structured separation across controlled cases without overclaiming what that means.
 
 ---
 
@@ -120,9 +120,42 @@ continue
 
 That means only this:
 
-> the descriptor layer appears stable and separable enough in this bounded 2D sandbox to justify a later, still-explicitly-experimental follow-up such as a multi-slice or simple 3D critic phase.
+> the descriptor layer appears stable and separable enough in this bounded 2D sandbox to justify a later, still-explicitly-experimental follow-up such as a multi-slice or simple 3D proxy critic phase.
 
 It does **not** mean the repo has validated real 3D ranking power.
+
+---
+
+## Multi-slice / simple 3D proxy critic sandbox
+
+The bounded follow-up lane models a simple 3D proxy as deterministic stacks of
+2D slices with controlled variation.
+
+The sandbox includes three provenance classes:
+
+| Case | Provenance class | Notes |
+|---|---|---|
+| `straight_stack` | `EXACT_ANALYTIC` | repeated analytic baseline slices |
+| `obstruction_stack` | `SYNTHETIC` | deterministic obstruction stack with slice-to-slice variation |
+| `constriction_stack` | `QUASI_ANALYTICAL` | deterministic constriction stack with smooth z-variation |
+
+The bounded ordering observed in the default stack sandbox is:
+
+```text
+straight_stack < obstruction_stack < constriction_stack
+```
+
+The current recommendation in the stack sandbox output is:
+
+```text
+continue
+```
+
+That means only this:
+
+> descriptor separation remains stable enough in a bounded stacked-slice proxy to justify later bounded follow-up work.
+
+It does **not** mean the repo has validated physical realism, TopoStream compatibility, or 3D candidate ranking.
 
 ---
 
@@ -131,6 +164,7 @@ It does **not** mean the repo has validated real 3D ranking power.
 At the current stage, this repo supports the following claims:
 
 - deterministic bounded 2D descriptor separation across the defined sandbox cases
+- deterministic bounded multi-slice descriptor separation across the defined stacked-slice proxy cases
 - explicit provenance separation across:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
@@ -142,10 +176,12 @@ At the current stage, this repo supports the following claims:
 
 This repo does **not** prove any of the following:
 
-- physical realism for synthetic cases
+- physical realism
 - vortex correspondence
 - TopoStream semantic compatibility
 - validation of ranking for 3D TPMS coldplate candidates
+- physics validation
+- hydraulic, thermal, structural, or manufacturing meaning
 - experimental performance claims
 - hardware usefulness
 - fabrication readiness
@@ -179,36 +215,49 @@ The README should describe what the code actually does today, not what would sou
 ```text
 coldplate-topobridge/
 ├─ docs/
-│  └─ EXPERIMENT_ANALYTICAL_2D_CRITIC.md
+│  ├─ EXPERIMENT_ANALYTICAL_2D_CRITIC.md
+│  └─ EXPERIMENT_MULTI_SLICE_3D_CRITIC.md
 ├─ experiments/
-│  └─ analytical_2d_critic/
+│  ├─ analytical_2d_critic/
+│  │  ├─ README.md
+│  │  ├─ generate_fields.py
+│  │  ├─ extract_descriptors.py
+│  │  └─ run_demo.py
+│  └─ multi_slice_3d_critic/
 │     ├─ README.md
-│     ├─ generate_fields.py
+│     ├─ generate_stack.py
 │     ├─ extract_descriptors.py
 │     └─ run_demo.py
 ├─ tests/
 │  ├─ test_analytical_2d_critic.py
+│  ├─ test_multi_slice_3d_critic.py
 │  ├─ test_controls.py
 │  └─ test_determinism.py
 └─ README.md
 ```
 
-Depending on branch history and future updates, additional bridge code or schema files may exist, but the core current experimental lane is the bounded analytical 2D critic workflow above.
+Depending on branch history and future updates, additional bridge code or schema files may exist, but the core current experimental lanes are the bounded analytical 2D workflow and the bounded multi-slice simple-3D proxy workflow above.
 
 ---
 
-## Running the analytical 2D critic demo
+## Running the experimental demos
 
-Example:
+Analytical 2D:
 
 ```bash
 python experiments/analytical_2d_critic/run_demo.py --output-root ./tmp/analytical_2d_critic_demo
 ```
 
-Run the analytical critic test:
+Multi-slice / simple 3D proxy:
 
 ```bash
-python -m pytest tests/test_analytical_2d_critic.py
+python experiments/multi_slice_3d_critic/run_demo.py --output-root ./tmp/multi_slice_3d_critic_demo
+```
+
+Run the sandbox critic tests:
+
+```bash
+python -m pytest tests/test_analytical_2d_critic.py tests/test_multi_slice_3d_critic.py
 ```
 
 Run supporting determinism and control tests:
@@ -250,7 +299,7 @@ A narrow but real result is better than a grand but mushy one.
 
 Right now, the honest result is:
 
-> the descriptor layer appears workable in a narrow 2D sandbox and is worth a later bounded follow-up, but it has **not** yet earned stronger claims.
+> the descriptor layer appears workable in bounded 2D and stacked-slice proxy sandboxes, but it has **not** yet earned stronger claims.
 
 That is a respectable state for a bridge repo.
 
@@ -280,11 +329,10 @@ That is exactly why it is useful.
 
 ## Proof / non-proof boundary
 
-The current implementation proves deterministic bounded 2D descriptor separation across the defined sandbox cases with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). It does **not** prove physical realism for synthetic cases, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, and does **not** validate ranking of 3D TPMS coldplate candidates.
+The current implementation proves deterministic bounded 2D descriptor separation across the defined sandbox cases and deterministic bounded multi-slice descriptor separation across the defined stacked-slice proxy cases, with explicit provenance separation (`EXACT_ANALYTIC`, `QUASI_ANALYTICAL`, `SYNTHETIC`). It does **not** prove physical realism, does **not** prove vortex correspondence, does **not** prove TopoStream semantic compatibility, does **not** validate ranking of 3D TPMS coldplate candidates, does **not** imply hydraulic, thermal, structural, or manufacturing meaning, and does **not** validate physics.
 
 ---
 
 ## Related note
 
-No validated Stage 4 files were changed as part of the analytical 2D critic addition. The sandbox is intentionally isolated so that bounded experimentation does not silently rewrite stronger evidence lanes.
-```
+No validated Stage 4 files were changed as part of the analytical 2D critic addition or the multi-slice / simple 3D proxy critic addition. The sandboxes are intentionally isolated so that bounded experimentation does not silently rewrite stronger evidence lanes.

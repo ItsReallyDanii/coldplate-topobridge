@@ -106,5 +106,6 @@ Reason:
 - the cases are clearly separable
 - the provenance classes remain explicit
 
-Continue means only that a later multi-slice or simple 3D critic phase appears
-worth testing. It does not authorize broader claims.
+Continue means only that a later multi-slice or simple 3D proxy critic phase appears
+worth testing. That follow-up now exists as a separate bounded sandbox in
+`docs/EXPERIMENT_MULTI_SLICE_3D_CRITIC.md` and does not authorize broader claims.
