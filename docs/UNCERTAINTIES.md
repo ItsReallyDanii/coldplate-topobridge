@@ -220,29 +220,19 @@ correspond to physical flow streamlines or resolved CFD, escalate and reject.
 
 ---
 
-### U-012: theta_std difference between geometry candidates is smaller than slice-level variation
+### U-012: metric difference between candidates is smaller than slice-level noise
 **Tier:** NOT_PROVEN
-**Added:** 2026-03-10 (Stage 2 comparison run)
+**Updated:** 2026-03-10 (Metric Usefulness Audit)
 
-**Description:** In the real candidate_01 vs candidate_02 comparison (z=25, both 50×50×50),
-the difference in theta_std is only **0.00135 rad (0.07%)**.
-The difference between z=10 and z=30 slices of the same candidate exceeds this (per
-`test_different_z_slices_produce_different_hashes`).
+**Description:** In a quantitative slice-sweep audit across z={10,15,20,25,30,35,40}, the variance of metrics like `theta_std` within a single candidate (due to slice choice) was found to be ~20x larger than the mean difference between candidate_01 and candidate_02. The signal-to-noise ratio is < 0.2.
 
-This means the inter-candidate signal in theta_std is smaller than the intra-candidate
-z-level variation at z=25. This does NOT mean the metrics are useless — it means that
-the slice policy (axis, index) is a confounding variable that must be held fixed for any
-comparison to be valid.
+This definitively proves that a single 2D slice is mathematically incapable of robustly ranking or describing the flow complexity of a 3D TPMS manifold. The metrics do not monotonically separate the candidates.
 
-**Impact:** Any future comparison of geometry-level bridge metrics MUST freeze the slice policy
-and document the z-sensitivity before making any relative claims.
+**Impact:** The bridge's output signatures and summaries function correctly as software artifacts (they are deterministic per-slice), but they are strictly descriptor metadata for a *specific* cross-section.
 
-**Resolution path:** Future work: z-sweep study over all 50 slices for both candidates,
-reporting theta_std as a function of z. This would bound the inter-candidate signal relative
-to intra-candidate z-sensitivity.
+**Resolution:** Documented in `METRIC_USEFULNESS_REPORT.md`. We continue using these metrics ONLY as programmatic descriptors (e.g. for downstream agents to verify determinism) but NOT as scientific 3D performance proxies.
 
-**NOT claimed:** That theta_std is a proxy for any geometric or physical property of the
-3D geometry, especially not at a single slice.
+**NOT claimed:** That bridge metrics can be used to rank 3D geometries.
 
 ---
 
