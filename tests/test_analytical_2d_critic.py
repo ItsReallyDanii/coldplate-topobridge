@@ -9,11 +9,23 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EXPERIMENT_ROOT = REPO_ROOT / "experiments" / "analytical_2d_critic"
-if str(EXPERIMENT_ROOT) not in sys.path:
-    sys.path.insert(0, str(EXPERIMENT_ROOT))
+_EXPERIMENT_ROOT = REPO_ROOT / "experiments" / "analytical_2d_critic"
 
-from run_demo import run_demo
+# Flush any stale sys.modules entries for bare experiment-local names.
+# This prevents a previously imported multi_slice_3d_critic version of
+# run_demo / extract_descriptors from shadowing this experiment's version.
+_EXPERIMENT_LOCAL_NAMES = ["run_demo", "generate_fields", "extract_descriptors"]
+for _name in _EXPERIMENT_LOCAL_NAMES:
+    sys.modules.pop(_name, None)
+
+# Ensure this experiment's directory is at sys.path[0] so bare-name imports
+# within the experiment scripts resolve to the correct co-located files.
+_exp_str = str(_EXPERIMENT_ROOT)
+if _exp_str in sys.path:
+    sys.path.remove(_exp_str)
+sys.path.insert(0, _exp_str)
+
+from run_demo import run_demo  # noqa: E402 — must follow path fixup
 
 
 def _sha256(path: Path) -> str:

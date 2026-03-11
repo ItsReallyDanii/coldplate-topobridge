@@ -8,15 +8,27 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EXPERIMENT_ROOT = REPO_ROOT / "experiments" / "multi_slice_3d_critic"
-SRC_ROOT = REPO_ROOT / "src"
-if str(EXPERIMENT_ROOT) not in sys.path:
-    sys.path.insert(0, str(EXPERIMENT_ROOT))
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
+_EXPERIMENT_ROOT = REPO_ROOT / "experiments" / "multi_slice_3d_critic"
 
-from generate_stack import PerturbationConfig
-from run_robustness import RobustnessVariant, run_robustness_pass
+# Flush any stale sys.modules entries for bare experiment-local names.
+# This prevents a previously imported analytical_2d_critic version of
+# extract_descriptors from shadowing this experiment's version, and prevents
+# a stale run_demo from another experiment from being resolved by run_robustness.
+_EXPERIMENT_LOCAL_NAMES = [
+    "run_demo", "run_robustness", "generate_stack", "extract_descriptors",
+]
+for _name in _EXPERIMENT_LOCAL_NAMES:
+    sys.modules.pop(_name, None)
+
+# Ensure this experiment's directory is at sys.path[0] so bare-name imports
+# within the experiment scripts resolve to the correct co-located files.
+_exp_str = str(_EXPERIMENT_ROOT)
+if _exp_str in sys.path:
+    sys.path.remove(_exp_str)
+sys.path.insert(0, _exp_str)
+
+from generate_stack import PerturbationConfig  # noqa: E402 — must follow path fixup
+from run_robustness import RobustnessVariant, run_robustness_pass  # noqa: E402
 
 
 TEST_VARIANTS = [
