@@ -363,3 +363,5 @@ The current implementation proves deterministic bounded 2D descriptor separation
 ## Related note
 
 No validated Stage 4 files were changed as part of the analytical 2D critic addition or the multi-slice / simple 3D proxy critic addition. The sandboxes are intentionally isolated so that bounded experimentation does not silently rewrite stronger evidence lanes.
+
+[![codecov](https://codecov.io/github/ItsReallyDanii/coldplate-topobridge/graph/badge.svg?token=M4AYW3VIV1)](https://codecov.io/github/ItsReallyDanii/coldplate-topobridge)
