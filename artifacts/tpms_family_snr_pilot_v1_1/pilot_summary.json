@@ -1,0 +1,80 @@
+{
+  "candidate_counts": {
+    "diamond": 2,
+    "gyroid": 1
+  },
+  "inclusion_gates": {
+    "gyroid_solid_fraction": 0.434,
+    "gyroid_transverse_max_ratio": 2.539327196762527,
+    "porosity_gate_pass": true,
+    "solid_fraction_gate": [
+      0.414,
+      0.453
+    ],
+    "transverse_gate_pass": true,
+    "transverse_min_gate": 0.0001
+  },
+  "metrics": {
+    "diamond_reference": {
+      "mean_theta_gradient_circular_mean": 0.6005724141593817,
+      "mean_theta_gradient_circular_std": 0.0017303943769747532,
+      "solid_fraction_mean": 0.4336,
+      "theta_std_mean": 1.8087509402315085,
+      "theta_std_std": 0.000675847240537486
+    },
+    "gyroid": {
+      "mean_theta_gradient_circular": 0.39321928790982796,
+      "theta_std": 1.6633390359882299
+    },
+    "per_candidate": {
+      "candidate_01_diamond_2d_s1127": {
+        "candidate_id": "candidate_01_diamond_2d_s1127",
+        "grad_mean_from_encoder": 0.9485203618346459,
+        "mean_theta_gradient_circular": 0.6023028085363564,
+        "n_active_pixels": 1406,
+        "provenance_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_01_diamond_2d_s1127\\provenance.json",
+        "solid_fraction": 0.4376,
+        "theta_std_rad": 1.808075092990971,
+        "transverse_max_ratio": 2.0248032732122137,
+        "velocity_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_01_diamond_2d_s1127\\velocity_field.npz"
+      },
+      "candidate_02_diamond_2d_s1045": {
+        "candidate_id": "candidate_02_diamond_2d_s1045",
+        "grad_mean_from_encoder": 0.9427789650936576,
+        "mean_theta_gradient_circular": 0.5988420197824069,
+        "n_active_pixels": 1426,
+        "provenance_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_02_diamond_2d_s1045\\provenance.json",
+        "solid_fraction": 0.4296,
+        "theta_std_rad": 1.809426787472046,
+        "transverse_max_ratio": 2.057956925777058,
+        "velocity_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_02_diamond_2d_s1045\\velocity_field.npz"
+      },
+      "candidate_gyroid_3d_s0000": {
+        "candidate_id": "candidate_gyroid_3d_s0000",
+        "grad_mean_from_encoder": 0.5057578289918679,
+        "mean_theta_gradient_circular": 0.39321928790982796,
+        "n_active_pixels": 1414,
+        "provenance_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_gyroid_3d_s0000\\provenance.json",
+        "solid_fraction": 0.434,
+        "theta_std_rad": 1.6633390359882299,
+        "transverse_max_ratio": 2.539327196762527,
+        "velocity_path": "C:\\Users\\slyki\\OneDrive\\Desktop\\coldplate-topgpbridge\\coldplate-design-engine\\results\\stage4_sim_full\\candidate_gyroid_3d_s0000\\velocity_field.npz"
+      }
+    },
+    "snr": {
+      "SNR_grad_mean": 119.82998153985508,
+      "SNR_theta_std": 215.1549869873492,
+      "grad_mean_signal": 0.2073531262495537,
+      "gradient_method": "circular_safe_wrapped_neighbor_deltas",
+      "snr_formula": "abs(gyroid - mean(diamond)) / std(diamond), std=population(ddof=0)",
+      "theta_std_signal": 0.14541190424327866
+    }
+  },
+  "pilot_id": "tpms_family_snr_v1_1",
+  "slice_policy": {
+    "axis": "z",
+    "index": 25,
+    "low_signal_threshold_fraction": 0.01,
+    "solid_threshold_fraction": 0.001
+  }
+}
