@@ -182,39 +182,6 @@ This robustness sweep does **not** validate physical realism, vortex corresponde
 TopoStream semantic compatibility, 3D TPMS candidate ranking, or any hydraulic, thermal,
 structural, or manufacturing meaning.
 
-### TPMS family SNR pilot
-
-A bounded pilot (`scripts/run_tpms_family_snr_pilot.py`) comparing two diamond TPMS
-candidates (seed variants) against one gyroid Stage 4 candidate using the existing Stage 4
-adapter and an SNR formula against diamond-seed variance.
-
-**Gate results (z=25 slice):**
-- Porosity gate: PASS
-- Transverse gate: PASS (see transverse-ratio caveat below)
-
-**Outcome: AMBIGUOUS**
-
-SNR values are numerically large (SNR_theta_std=215, SNR_grad_mean=120) but this reflects
-a near-zero intra-diamond-seed variance in the denominator, not a validated separability
-claim. The gyroid descriptors (`theta_std=1.663 rad`, `grad_mean=0.393 rad/px`) are *lower*
-than the diamond reference — an unexpected direction not explained by the current bridge.
-This pilot does **not** validate TPMS ranking and does **not** extend the VALIDATED tier.
-
-**Required caveats (preserved):**
-
-- **Untracked-origin caveat:** `emit_stage4_gyroid.py` (the script that generated the
-  gyroid Stage 4 artifact) is not in this repo. The gyroid artifact's generation provenance
-  exits the repo boundary. Paths in `artifacts/tpms_family_snr_pilot_v1_1/pilot_summary.json`
-  are Windows absolute paths (`C:\Users\slyki\...`) unreproducible outside the origin machine.
-
-- **Transverse-ratio discrepancy:** The gyroid transverse_max_ratio (2.539) is higher
-  than the diamond values (~2.025–2.058). This is an expected geometry difference between
-  the 3D gyroid candidate (`candidate_gyroid_3d_s0000`) and the 2D diamond candidates
-  at z=25 — not a metric anomaly.
-
-- **Branch state at execution:** Local master was 2 commits behind remote origin at the
-  time of pilot execution. The pilot was committed on top of the checkpoint branch.
-
 ---
 
 ## What this work proves
