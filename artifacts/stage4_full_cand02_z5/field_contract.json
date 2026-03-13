@@ -1,0 +1,38 @@
+{
+  "bridge_schema_id": "bridge_field_frame",
+  "field_dtype": "float64",
+  "field_shape": [
+    50,
+    50
+  ],
+  "has_scalar": true,
+  "input_file": "/home/user/coldplate-topobridge/02_diamond_velocity_field.npz",
+  "input_sha256": "77780539b9c2b191b270bbefb767eee6e8241d0bdb644c0b9024831a57c81e2d",
+  "low_signal_fraction": 0.0,
+  "low_signal_threshold": 1.8597195049789241,
+  "magnitude_stats": {
+    "max": 185.9719504978924,
+    "mean": 85.1695165281549,
+    "min": 3.899043219442467,
+    "std": 35.21775691115393
+  },
+  "provenance": {
+    "field_frozen_at": "2026-03-06T10:26:58.734643Z",
+    "grid_dx": 0.1,
+    "grid_dy": 0.1,
+    "grid_nx": 50,
+    "grid_ny": 50,
+    "preprocessing": [
+      "stage4_velocity_field_slice:axis=z,index=5",
+      "solid_detection:method=velocity_magnitude_threshold",
+      "axes_transpose:stage4_nx_ny_nz_to_bridge_ny_nx"
+    ],
+    "schema_version": "1.0.0",
+    "source_artifact": "candidate_01_diamond_2d_s1127/velocity_field.npz",
+    "source_commit": "617eb6ab06191e624373f98dea65542e0e460bb7",
+    "source_repo": "coldplate-design-engine",
+    "source_stage": "stage4_sim"
+  },
+  "schema_version": "1.0.0",
+  "solid_mask_fraction": 0.4312
+}
