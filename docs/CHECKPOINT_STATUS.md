@@ -62,7 +62,7 @@ python scripts/slice_sweep.py
 
 A cross-z scalar CV analysis was completed against `signatures.jsonl` artifacts for four runs across five z-slices. Full table and method in `docs/LANE_B_CHECKPOINT.md`.
 
-**Result:** CV_all(scalar over NON_SOLID) ordering `ctrl_uniform_channel < ctrl_single_obstruction < stage4_full_cand01/cand02` held at every tested slice with no crossover.
+**Result:** CV_all(scalar over NON_SOLID) ordering `ctrl_uniform_channel < ctrl_single_obstruction < stage4_full_cand01/cand02` held at every tested slice with no crossover. cand01 and cand02 are indistinguishable at this aggregation level.
 
 **Status:**
 - USABLE FOR CLASS-LEVEL SCREENING
