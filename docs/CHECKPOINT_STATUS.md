@@ -55,3 +55,16 @@ python scripts/slice_sweep.py
 ## 4. Final Conclusion
 
 `coldplate-topobridge` is **VALIDATED** only for the current Stage 4 software/control protocol: it deterministically ingests current Stage 4 velocity artifacts, slices them to 2D, emits schema-valid bridge-local outputs, and passes the present G5/G6 control gates. For the tested diamond TPMS pair, the current 2D slice metrics are not validated ranking proxies. No hydraulic, thermal, structural, holistic 3D, or TopoStream-semantic claim is supported.
+
+---
+
+## 5. Lane B Checkpoint (2026-03-13)
+
+A cross-z scalar CV analysis was completed against `signatures.jsonl` artifacts for four runs across five z-slices. Full table and method in `docs/LANE_B_CHECKPOINT.md`.
+
+**Result:** CV_all(scalar over NON_SOLID) ordering `ctrl_uniform_channel < ctrl_single_obstruction < stage4_full_cand01/cand02` held at every tested slice with no crossover.
+
+**Status:**
+- USABLE FOR CLASS-LEVEL SCREENING
+- NOT USABLE FOR CANDIDATE-LEVEL RANKING
+- STILL NOT PHYSICS-VALIDATED

@@ -196,6 +196,7 @@ At the current stage, this repo supports the following claims:
   - `EXACT_ANALYTIC`
   - `QUASI_ANALYTICAL`
   - `SYNTHETIC`
+- **Lane B (2026-03-13):** class-level CV_all(scalar) ordering `ctrl_uniform_channel < ctrl_single_obstruction < stage4_full_cand01/cand02` is stable across all five tested z-slices with no crossover; see `docs/LANE_B_CHECKPOINT.md`
 
 ---
 
