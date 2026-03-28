@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "repo_librarian/catalog.schema.json",
+  "title": "Repo Librarian Catalog Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "entry_id",
+    "title",
+    "object_type",
+    "path",
+    "authority",
+    "claim",
+    "evidence",
+    "caveats",
+    "novelty",
+    "recency",
+    "credibility"
+  ],
+  "properties": {
+    "entry_id": {
+      "type": "string",
+      "pattern": "^rl_[0-9]{4}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "object_type": {
+      "type": "string",
+      "enum": [
+        "claim_boundary",
+        "uncertainty",
+        "artifact",
+        "script",
+        "doc_status",
+        "method_rule"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lifecycle", "validation", "status"],
+      "properties": {
+        "lifecycle": {
+          "type": "string",
+          "enum": ["current", "historical", "sandbox"]
+        },
+        "validation": {
+          "type": "string",
+          "enum": ["validated", "provisional", "speculative", "blocked"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "deprecated", "archived"]
+        }
+      }
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "lines"],
+        "properties": {
+          "file": {"type": "string", "minLength": 1},
+          "lines": {
+            "type": "string",
+            "pattern": "^[0-9]+(-[0-9]+)?$"
+          },
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "caveats": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "novelty": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "recency": {
+      "type": "string",
+      "enum": ["stale", "current", "unknown"]
+    },
+    "credibility": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "ISO8601 UTC timestamp"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
